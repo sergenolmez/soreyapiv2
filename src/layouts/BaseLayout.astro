@@ -1,0 +1,443 @@
+---
+import Header from "../components/Header.astro";
+import Footerv2 from "../components/Footerv2.astro";
+import ContactBar from "../components/ContactBar.astro";
+import CallButton from "../components/CallButton.astro";
+import ContactForm from "../components/ContactForm.astro";
+import MetaCAPI from "../components/MetaCAPI.astro";
+
+// Base layout for all pages
+export interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  keywords?: string;
+  image?: string;
+  isHome?: boolean;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  canonical = Astro.request.url,
+  image = "/images/logo.png",
+  isHome = false,
+} = Astro.props;
+
+const canonicalURL = canonical;
+
+const homepageStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Corporation",
+      "@id": "https://soreyapi.com/#organization",
+      name: "Sore Yapı",
+      legalName:
+        "ERDİR GAYRİMENKUL YATIRIM İNŞAAT VE YÖNETİM DANIŞMANLIĞI TURİZM SANAYİ VE TİCARET LİMİTED ŞİRKETİ",
+      url: "https://soreyapi.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://soreyapi.com/images/logo-dark-2.png",
+        width: 250,
+        height: 60,
+      },
+      description:
+        "Sore Yapı, Kuşadası ve Aydın bölgesinde faaliyet gösteren, gayrimenkul geliştirme, inşaat ve yatırım danışmanlığı alanlarında uzman bir şirkettir.",
+      slogan: "Her Detayında Kalite, Her Zaman Güven",
+      email: "info@soreyapi.com",
+      telephone: "+902569110331",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress:
+          "TÜRKMEN MAH. KAYMAKAN SK. KOZ APT NO: 1 İÇ KAPI NO: 101",
+        addressLocality: "Kuşadası",
+        addressRegion: "Aydın",
+        postalCode: "09400",
+        addressCountry: "TR",
+      },
+      areaServed: [
+        { "@type": "City", name: "Kuşadası" },
+        { "@type": "State", name: "Aydın" },
+        { "@type": "Country", name: "Türkiye" },
+      ],
+      sameAs: [
+        "https://maps.app.goo.gl/c1pTdoQyPhGZePXm6",
+        "https://instagram.com/soreyapi",
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: "+902569110331",
+        email: "info@soreyapi.com",
+        availableLanguage: ["Turkish"],
+        areaServed: "TR",
+      },
+      foundingDate: "2010",
+      numberOfEmployees: {
+        "@type": "QuantitativeValue",
+        value: 25,
+      },
+      knowsAbout: [
+        "Proje Geliştirme",
+        "Gayrimenkul Yatırım",
+        "İnşaat",
+        "Satış ve Pazarlama",
+        "Finansal Danışmanlık",
+        "Tapu ve Hukuki Süreç",
+        "Satış Sonrası Hizmetler",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://soreyapi.com/#website",
+      url: "https://soreyapi.com",
+      name: "Sore Yapı",
+      description:
+        "Sore Yapı - Her Detayında Kalite, Her Zaman Güven. İnşaat ve gayrimenkul sektöründe güvenilir çözümler.",
+      publisher: {
+        "@id": "https://soreyapi.com/#organization",
+      },
+      inLanguage: "tr-TR",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate:
+            "https://soreyapi.com/projeler?search={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://soreyapi.com/#webpage",
+      url: "https://soreyapi.com",
+      name: "Sore Yapı",
+      description:
+        "Sore Yapı'nın resmi web sitesidir. İnşaat ve gayrimenkul sektöründeki uzmanlığımız, projelerimiz ve hizmetlerimiz hakkında bilgi edinin.",
+      isPartOf: {
+        "@id": "https://soreyapi.com/#website",
+      },
+      about: {
+        "@id": "https://soreyapi.com/#organization",
+      },
+      inLanguage: "tr-TR",
+      breadcrumb: {
+        "@id": "https://soreyapi.com/#breadcrumb",
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://soreyapi.com/#breadcrumb",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Ana Sayfa",
+          item: "https://soreyapi.com",
+        },
+      ],
+    },
+    {
+      "@type": "Service",
+      "@id": "https://soreyapi.com/#services",
+      provider: {
+        "@id": "https://soreyapi.com/#organization",
+      },
+      serviceType: "İnşaat ve Gayrimenkul Hizmetleri",
+      areaServed: {
+        "@type": "Country",
+        name: "Türkiye",
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Sore Yapı Hizmetleri",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Proje Geliştirme",
+              description:
+                "Modern yaşam alanları ve yüksek getiri potansiyeli taşıyan projeler; bölge analizi, mimari tasarım ve ruhsat süreçlerinin uçtan uca yönetimi.",
+              provider: {
+                "@id": "https://soreyapi.com/#organization",
+              },
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Satış ve Pazarlama",
+              description:
+                "Şeffaf, güvenilir ve veriye dayalı satış süreçleri; doğru bilgilendirme ile yatırım ve yaşam alanı eşleştirmesi.",
+              provider: {
+                "@id": "https://soreyapi.com/#organization",
+              },
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Yatırım Danışmanlığı",
+              description:
+                "Kapsamlı analizler ve stratejik yönlendirmelerle sürdürülebilir, uzun vadeli kazanç odaklı yatırım planları.",
+              provider: {
+                "@id": "https://soreyapi.com/#organization",
+              },
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Finansal Danışmanlık",
+              description:
+                "Kişiye özel ödeme planları, kredi yönlendirmeleri ve mali analizlerle erişilebilir finansal çözümler.",
+              provider: {
+                "@id": "https://soreyapi.com/#organization",
+              },
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Tapu ve Hukuki Süreç Yönetimi",
+              description:
+                "Alım-satım, iskan ve ilgili hukuki prosedürlerin uzman ekip tarafından şeffaf ve hızlı yönetimi.",
+              provider: {
+                "@id": "https://soreyapi.com/#organization",
+              },
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Satış Sonrası Hizmetler",
+              description:
+                "Teslim sonrası bakım, teknik destek, süreç yönetimi ve müşteri memnuniyet takibi.",
+              provider: {
+                "@id": "https://soreyapi.com/#organization",
+              },
+            },
+          },
+        ],
+      },
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://soreyapi.com/#localbusiness",
+      name: "Sore Yapı",
+      image: "https://soreyapi.com/images/logo.png",
+      telephone: "+902569110331",
+      email: "info@soreyapi.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress:
+          "TÜRKMEN MAH. KAYMAKAN SK. KOZ APT NO: 1 İÇ KAPI NO: 101",
+        addressLocality: "Kuşadası",
+        addressRegion: "Aydın",
+        postalCode: "09400",
+        addressCountry: "TR",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 37.86584331993909,
+        longitude: 27.272503637912113,
+      },
+      hasMap: {
+        "@type": "Map",
+        url: "https://maps.app.goo.gl/c1pTdoQyPhGZePXm6",
+      },
+      url: "https://soreyapi.com",
+      priceRange: "$$",
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+      ],
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="Fikir Yapım" />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content={description} />
+    <meta
+      name="facebook-domain-verification"
+      content="lungya1h13go6jfgpqrssjsxnlkz9d"
+    />
+    <meta name="publisher" content="Fikir Yapım" />
+    <meta name="keywords" content={keywords} />
+    <meta name="copyright" content="Sore Yapı " />
+    <meta name="language" content="Turkish" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+
+    <!-- OPEN GRAPH / FACEBOOK -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+
+    <!-- TWITTER -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.site)} />
+
+    <!-- FAVICONS ICON -->
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- PAGE TITLE HERE -->
+    <title>{title}</title>
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="/css/loader.min.css" />
+    <!-- LOADER STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/bootstrap.min.css"
+    /><!-- BOOTSTRAP STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/fontawesome/css/font-awesome.min.css"
+    /><!-- FONTAWESOME STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/owl.carousel.min.css"
+    /><!-- OWL CAROUSEL STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/magnific-popup.min.css"
+    /><!-- MAGNIFIC POPUP STYLE SHEET -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/style.css"
+    /><!-- MAIN STYLE SHEET -->
+    <!-- REVOLUTION SLIDER 4 STYLE -->
+    <link rel="stylesheet" type="text/css" href="/css/rev-slider-4.css" />
+    <!-- REVOLUTION SLIDER CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/revolution/revolution/css/settings.css"
+    />
+    <!-- REVOLUTION NAVIGATION STYLE -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/plugins/revolution/revolution/css/navigation.css"
+    />
+
+    <!-- GOOGLE FONTS -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,800,800i,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Crete+Round:400,400i&subset=latin-ext"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data (Anasayfa için) -->
+    {
+      isHome && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(homepageStructuredData)}
+        />
+      )
+    }
+
+    <!-- Slot for additional head content -->
+    <slot name="head" />
+    <MetaCAPI />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <div class="content-wrapper">
+        <Header />
+        <main>
+          <slot />
+        </main>
+      </div>
+      <Footerv2 />
+      <ContactBar />
+      <CallButton />
+      <ContactForm />
+    </div>
+    <!-- JAVASCRIPT  FILES ========================================= -->
+    <script is:inline src="/js/jquery-3.7.1.min.js"></script>
+    <!-- JQUERY.MIN JS -->
+    <script is:inline src="/js/popper.min.js" defer></script>
+    <script is:inline src="/js/bootstrap.min.js" defer></script>
+    <!-- BOOTSTRAP.MIN JS -->
+    <script is:inline src="/js/magnific-popup.min.js" defer></script>
+    <!-- MAGNIFIC-POPUP JS -->
+    <script is:inline src="/js/waypoints.min.js" defer></script>
+    <!-- WAYPOINTS JS -->
+    <script is:inline src="/js/counterup.min.js" defer></script>
+    <!-- COUNTERUP JS -->
+    <script is:inline src="/js/waypoints-sticky.min.js" defer></script>
+    <!-- COUNTERUP JS -->
+    <script is:inline src="/js/isotope.pkgd.min.js" defer></script>
+    <!-- MASONRY  -->
+    <script is:inline src="/js/imagesloaded.pkgd.min.js" defer></script>
+    <!-- MASONRY  -->
+    <script is:inline src="/js/owl.carousel.min.js" defer></script>
+    <!-- OWL  SLIDER  -->
+    <script is:inline src="/js/jquery.owl-filter.js" defer></script>
+    <script is:inline src="/js/scrolla.min.js" defer></script>
+    <!-- ON SCROLL CONTENT ANIMTE   -->
+    <script is:inline src="/js/custom.js" defer></script>
+    <!-- CUSTOM FUCTIONS  -->
+    <script is:inline src="/js/shortcode.js" defer></script>
+    <!-- REVOLUTION JS FILES -->
+    <script
+      is:inline
+      src="/plugins/revolution/revolution/js/jquery.themepunch.tools.min.js"
+    ></script>
+    <script
+      is:inline
+      src="/plugins/revolution/revolution/js/jquery.themepunch.revolution.min.js"
+    ></script>
+    <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+    <script
+      is:inline
+      src="/plugins/revolution/revolution/js/extensions/revolution-plugin.js"
+    ></script>
+    <!-- REVOLUTION SLIDER SCRIPT FILES -->
+    <script is:inline src="/js/rev-script-1.js"></script>
+  </body>
+</html>

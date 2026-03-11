@@ -1,0 +1,58 @@
+# API Güvenlik Kuralları
+# ========================
+
+# .env dosyasına erişimi engelle
+<Files ".env">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Log dosyalarına erişimi engelle
+<FilesMatch "\.(txt|log)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Sadece form-handler.php'ye POST izni ver
+<Files "*.php">
+    <LimitExcept POST GET>
+        Order Allow,Deny
+        Deny from all
+    </LimitExcept>
+</Files>
+
+# config.php'ye doğrudan erişimi engelle
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Entegrasyon dosyalarına doğrudan erişimi engelle
+<Files "callintech.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "facebook_capi.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# rate-limiter.php'ye doğrudan erişimi engelle
+<Files "rate-limiter.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# csrf.php'ye doğrudan erişimi engelle
+<Files "csrf.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Dizin listelemeyi kapat
+Options -Indexes
+
+# PHP hata mesajlarını gizle (production)
+php_flag display_errors off
+php_flag log_errors on

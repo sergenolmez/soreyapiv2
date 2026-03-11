@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import pic1 from "../assets/images/gallery/pic1.jpg";
+import pic2 from "../assets/images/gallery/pic2.jpg";
+---
+
+<!-- WELCOME SECTION START -->
+<div class="section-full clearfix p-t80 bg-gray">
+  <div class="container">
+    <div class="section-content">
+      <div class="row">
+        <div class="col-lg-5 col-md-12 m-b30 text-uppercase text-black">
+          <span class="font-30 font-weight-300 d-block m-b10">SORE YAPI</span>
+          <h2 class="font-40">Her Detayında Kalite, Her Zaman Güven</h2>
+          <p>
+            Sore Yapı, inşaat ve gayrimenkul sektöründe güven, kalite ve
+            şeffaflık ilkeleriyle faaliyet göstermektedir.
+          </p>
+          <p class="text-lowercase">
+            Amacımız; yatırımcılar ve bireysel konut alıcıları için değer katan,
+            estetik ve fonksiyonel yaşam alanları üretmek ve uzun ömürlü
+            projeler hayata geçirmektir.Kurulduğumuz günden bu yana, vizyoner ve
+            sürdürülebilir bir anlayışla her projede yüksek standartları esas
+            alıyoruz. Güvenilir ve şeffaf süreç yönetimi ile müşteri
+            memnuniyetini en üst seviyede tutmayı temel prensibimiz olarak
+            benimsiyoruz.
+          </p>
+          <a href="/hakkimizda" class="btn-half site-button button-lg m-b15"
+            ><span>Hakkımızda</span><em></em></a
+          >
+        </div>
+
+        <div class="col-lg-7 col-md-12">
+          <div class="m-carousel-1 m-l100">
+            <div class="owl-carousel home-carousel-1 owl-btn-vertical-center">
+              <!-- COLUMNS 1 -->
+              <div class="item">
+                <div class="ow-img wt-img-effect zoom-slow">
+                  <Image src={pic1} alt="Sore Yapı Galeri 1" />
+                </div>
+              </div>
+              <!-- COLUMNS 2 -->
+              <div class="item">
+                <div class="ow-img wt-img-effect zoom-slow">
+                  <Image src={pic2} alt="Sore Yapı Galeri 2" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="hilite-title p-lr20 m-tb20 text-right text-uppercase bdr-gray bdr-right"
+      >
+        <strong>20 Yıl</strong>
+        <span class="text-black">Deneyim</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- WELCOME  SECTION END -->

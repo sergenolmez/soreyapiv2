@@ -1,0 +1,47 @@
+---
+// Example component for integrating Envato template components
+export interface Props {
+  title?: string;
+  content?: string;
+  className?: string;
+}
+
+const {
+  title = "Template Component",
+  content = "This is a placeholder for your Envato template content.",
+  className = "",
+} = Astro.props;
+---
+
+<div class={`template-component ${className}`}>
+  {title && <h2>{title}</h2>}
+  <div class="content">
+    <p>{content}</p>
+    <!-- 
+      Replace this with your actual Envato template HTML structure
+      You can copy-paste HTML sections from your template here
+      and convert them to Astro syntax
+    -->
+  </div>
+</div>
+
+<style>
+  .template-component {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .template-component h2 {
+    margin-top: 0;
+    color: #333;
+  }
+
+  .content {
+    /* Add your template-specific styles here */
+  }
+
+  /* 
+    Add your Envato template component styles here
+    You can copy CSS from your template and adapt it
+  */
+</style>

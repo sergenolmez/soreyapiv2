@@ -1,0 +1,467 @@
+<!--
+╔══════════════════════════════════════════════════════╗
+║  BXH HERO SLIDER — Vanilla JS                       ║
+║                                                      ║
+║  YENİ SLAYT EKLEMEK İÇİN:                           ║
+║  Sadece .bxh-slides içine bir <article> ekle.       ║
+║  Oklar, dots ve autoplay otomatik çalışır.           ║
+╚══════════════════════════════════════════════════════╝
+-->
+
+<section class="bxh-hero-v2" aria-label="Ürün slayt gösterisi" aria-roledescription="carousel">
+    <div class="bxh-container">
+
+        <div class="bxh-slides" aria-live="polite">
+
+            <!-- ── SLIDE 1 ── -->
+            <article class="bxh-slide" role="group" aria-roledescription="slide">
+                <div class="bxh-content">
+                    <span class="bxh-badge">YENİ ÜRÜN</span>
+                    <h2 class="bxh-title">
+                        Snow Bite <br>
+                        <span class="bxh-highlight">White Coconut &amp; Almond</span>
+                    </h2>
+                    <p class="bxh-description">
+                        Premium hindistan cevizi kaplaması, kavrulmuş badem özüyle buluşuyor.
+                        Minimal, temiz ve unutulmaz bir deneyim.
+                    </p>
+                    <div class="bxh-actions">
+                        <a href="#" class="bxh-btn bxh-btn-primary">Hemen Al</a>
+                        <a href="#" class="bxh-btn bxh-btn-ghost">Keşfet</a>
+                    </div>
+                </div>
+                <div class="bxh-visual">
+                    <div class="bxh-image-wrapper">
+                        <img src="/tema/genel/uploads/slide1.jpg" alt="Snow Bite White Coconut &amp; Almond"
+                            class="bxh-product-img" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </article>
+
+            <!-- ── SLIDE 2 ── -->
+            <article class="bxh-slide" role="group" aria-roledescription="slide">
+                <div class="bxh-content">
+                    <span class="bxh-badge">LİMİTED</span>
+                    <h2 class="bxh-title">
+                        Velvet Cocoa <br>
+                        <span class="bxh-highlight">Dark Chocolate &amp; Hazelnut</span>
+                    </h2>
+                    <p class="bxh-description">
+                        Derin kakao aromaları, pürüzsüz bir finişle buluşuyor.
+                        Sessiz lüks için tasarlanmış premium bir tat.
+                    </p>
+                    <div class="bxh-actions">
+                        <a href="#" class="bxh-btn bxh-btn-primary">Hemen Al</a>
+                        <a href="#" class="bxh-btn bxh-btn-ghost">Detaylar</a>
+                    </div>
+                </div>
+                <div class="bxh-visual">
+                    <div class="bxh-image-wrapper">
+                        <img src="/tema/genel/uploads/slide2.jpg" alt="Velvet Cocoa Dark Chocolate &amp; Hazelnut"
+                            class="bxh-product-img" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </article>
+
+            <!-- Yeni slayt eklemek için buraya kopyala ▲ -->
+
+        </div><!-- /.bxh-slides -->
+
+        <!-- Oklar: .bxh-container (position:relative) içinde, slide dışında -->
+        <div class="bxh-arrows" aria-hidden="true">
+            <button class="bxh-arrow bxh-arrow-prev" aria-label="Önceki slayt">‹</button>
+            <button class="bxh-arrow bxh-arrow-next" aria-label="Sonraki slayt">›</button>
+        </div>
+
+        <div class="bxh-dots" role="tablist" aria-label="Slayt seçimi"></div>
+
+    </div>
+</section>
+
+<style>
+    /* ── Değişkenler ─────────────────────────────── */
+    .bxh-hero-v2 {
+        --bxh-bg: #f8f8fa;
+        --bxh-text: #111114;
+        --bxh-muted: #6b6b73;
+        --bxh-accent: #111114;
+        --bxh-line: rgba(0, 0, 0, .10);
+        --bxh-radius: 28px;
+        --bxh-shadow: 0 40px 90px rgba(17, 17, 20, .10);
+        --bxh-max: 1200px;
+
+        padding: clamp(56px, 8vw, 120px) 20px;
+        background:
+            radial-gradient(680px 420px at 18% 30%, rgba(255, 214, 170, .35), transparent 60%),
+            radial-gradient(560px 420px at 86% 22%, rgba(200, 230, 255, .35), transparent 60%),
+            radial-gradient(700px 520px at 55% 85%, rgba(215, 255, 228, .28), transparent 60%),
+            var(--bxh-bg);
+    }
+
+    /* ── Layout ──────────────────────────────────── */
+    .bxh-hero-v2 .bxh-container {
+        max-width: var(--bxh-max);
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .bxh-hero-v2 .bxh-slides {
+        position: relative;
+        min-height: 520px;
+        border-radius: calc(var(--bxh-radius) + 8px);
+    }
+
+    /* ── Slide ───────────────────────────────────── */
+    .bxh-hero-v2 .bxh-slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: 1.05fr .95fr;
+        gap: clamp(28px, 5vw, 72px);
+        align-items: center;
+        padding: clamp(24px, 4.2vw, 54px);
+        border: 1px solid var(--bxh-line);
+        border-radius: calc(var(--bxh-radius) + 8px);
+        background: rgba(255, 255, 255, .62);
+        backdrop-filter: blur(22px);
+        box-shadow: var(--bxh-shadow);
+        opacity: 0;
+        transform: translateY(8px) scale(.99);
+        pointer-events: none;
+        transition: opacity .45s ease, transform .45s ease;
+    }
+
+    .bxh-hero-v2 .bxh-slide.is-active {
+        opacity: 1;
+        transform: none;
+
+        pointer-events: auto;
+    }
+
+    /* ── Tipografi ───────────────────────────────── */
+    .bxh-hero-v2 .bxh-content {
+        max-width: 560px;
+    }
+
+    .bxh-hero-v2 .bxh-badge {
+        display: inline-block;
+        font-size: 11px;
+        letter-spacing: 2.2px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--bxh-muted);
+        border: 1px solid var(--bxh-line);
+        border-radius: 999px;
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, .6);
+        margin-bottom: 18px;
+    }
+
+    .bxh-hero-v2 .bxh-title {
+        margin: 0 0 18px;
+        font-size: clamp(34px, 4vw, 56px);
+        line-height: 1.06;
+        font-weight: 700;
+        color: var(--bxh-text);
+    }
+
+    .bxh-hero-v2 .bxh-highlight {
+        font-weight: 400;
+        color: var(--bxh-muted);
+    }
+
+    .bxh-hero-v2 .bxh-description {
+        margin: 0 0 30px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--bxh-muted);
+        max-width: 48ch;
+    }
+
+    /* ── Butonlar ────────────────────────────────── */
+    .bxh-hero-v2 .bxh-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .bxh-hero-v2 .bxh-btn {
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 14px 26px;
+        transition: transform .25s, box-shadow .25s, background .25s;
+    }
+
+    .bxh-hero-v2 .bxh-btn-primary {
+        background: var(--bxh-accent);
+        color: #fff;
+        box-shadow: 0 14px 30px rgba(17, 17, 20, .16);
+    }
+
+    .bxh-hero-v2 .bxh-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 40px rgba(17, 17, 20, .22);
+    }
+
+    .bxh-hero-v2 .bxh-btn-ghost {
+        background: rgba(255, 255, 255, .7);
+        color: var(--bxh-text);
+        border: 1px solid var(--bxh-line);
+    }
+
+    .bxh-hero-v2 .bxh-btn-ghost:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, .95);
+    }
+
+    /* ── Görsel ──────────────────────────────────── */
+    .bxh-hero-v2 .bxh-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bxh-hero-v2 .bxh-image-wrapper {
+        width: min(420px, 100%);
+        border-radius: var(--bxh-radius);
+        padding: clamp(18px, 3vw, 34px);
+        background: rgba(255, 255, 255, .72);
+        border: 1px solid var(--bxh-line);
+        box-shadow: 0 30px 80px rgba(17, 17, 20, .10);
+        overflow: hidden;
+    }
+
+    .bxh-hero-v2 .bxh-product-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform .55s ease;
+    }
+
+    .bxh-hero-v2 .bxh-slide.is-active:hover .bxh-product-img {
+        transform: scale(1.035);
+    }
+
+    /* ── Ok Butonları ────────────────────────────── */
+    /*
+     * .bxh-arrows → .bxh-container (position:relative) içinde mutlak konumlanır.
+     * top / height: slayt alanının yüksekliği kadar, böylece oklar her zaman
+     * slayta göre ortalanmış görünür.
+     */
+    .bxh-hero-v2 .bxh-arrows {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--bxh-slides-h, 520px);
+        /* JS ile güncellenir */
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .bxh-hero-v2 .bxh-arrow {
+        pointer-events: auto;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        line-height: 1;
+        color: var(--bxh-text);
+        background: rgba(255, 255, 255, .85);
+        border: 1px solid var(--bxh-line);
+        box-shadow: 0 8px 24px rgba(17, 17, 20, .12);
+        cursor: pointer;
+        transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+        backdrop-filter: blur(8px);
+    }
+
+    .bxh-hero-v2 .bxh-arrow:hover {
+        transform: translateY(-50%) scale(1.08);
+        background: #fff;
+        box-shadow: 0 12px 32px rgba(17, 17, 20, .18);
+    }
+
+    /* Kartın dış kenarında — içeriğe binmez */
+    .bxh-hero-v2 .bxh-arrow-prev {
+        left: -22px;
+    }
+
+    .bxh-hero-v2 .bxh-arrow-next {
+        right: -22px;
+    }
+
+    /* Küçük ekranda tam dışarı taşmamasın diye içeri al */
+    @media (max-width: 600px) {
+        .bxh-hero-v2 .bxh-arrow-prev {
+            left: 8px;
+        }
+
+        .bxh-hero-v2 .bxh-arrow-next {
+            right: 8px;
+        }
+    }
+
+    /* ── Dots ────────────────────────────────────── */
+    .bxh-hero-v2 .bxh-dots {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .bxh-hero-v2 .bxh-dot {
+        cursor: pointer;
+        height: 10px;
+        width: 10px;
+        border-radius: 999px;
+        background: var(--bxh-line);
+        border: none;
+        padding: 0;
+        transition: width .3s ease, background .3s ease;
+    }
+
+    .bxh-hero-v2 .bxh-dot.is-active {
+        width: 28px;
+        background: var(--bxh-accent);
+    }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 980px) {
+        .bxh-hero-v2 .bxh-slides {
+            min-height: 720px;
+        }
+
+        .bxh-hero-v2 .bxh-slide {
+            grid-template-columns: 1fr;
+            text-align: center;
+            justify-items: center;
+        }
+
+        .bxh-hero-v2 .bxh-description {
+            margin-inline: auto;
+        }
+
+        .bxh-hero-v2 .bxh-actions {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .bxh-hero-v2 .bxh-arrow {
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .bxh-hero-v2 .bxh-slide,
+        .bxh-hero-v2 .bxh-btn,
+        .bxh-hero-v2 .bxh-product-img,
+        .bxh-hero-v2 .bxh-dot,
+        .bxh-hero-v2 .bxh-arrow {
+            transition: none !important;
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        'use strict';
+
+        // ── Ayarlar ───────────────────────────────────────────────
+        const AUTOPLAY_DELAY = 5000;   // ms — 0 = autoplay kapalı
+        const PAUSE_ON_HOVER = true;
+        // ─────────────────────────────────────────────────────────
+
+        document.querySelectorAll('.bxh-hero-v2').forEach(function (section) {
+            const slides = Array.from(section.querySelectorAll('.bxh-slide'));
+            const dotsWrap = section.querySelector('.bxh-dots');
+            const btnPrev = section.querySelector('.bxh-arrow-prev');
+            const btnNext = section.querySelector('.bxh-arrow-next');
+            let current = 0;
+            let timer = null;
+
+            if (!slides.length) return;
+
+            // Dot'ları oluştur
+            slides.forEach(function (_, i) {
+                const dot = document.createElement('button');
+                dot.className = 'bxh-dot';
+                dot.type = 'button';
+                dot.setAttribute('role', 'tab');
+                dot.setAttribute('aria-label', 'Slayt ' + (i + 1));
+                dot.addEventListener('click', function () { goTo(i); });
+                dotsWrap.appendChild(dot);
+            });
+
+            const dots = Array.from(dotsWrap.querySelectorAll('.bxh-dot'));
+
+            // Slayta git
+            function goTo(index) {
+                slides[current].classList.remove('is-active');
+                slides[current].setAttribute('aria-hidden', 'true');
+                dots[current].classList.remove('is-active');
+
+                current = (index + slides.length) % slides.length;
+
+                slides[current].classList.add('is-active');
+                slides[current].removeAttribute('aria-hidden');
+                dots[current].classList.add('is-active');
+
+                // Aria label güncelle
+                slides.forEach(function (s, i) {
+                    s.setAttribute('aria-label', (i + 1) + ' / ' + slides.length);
+                });
+            }
+
+            // İlk slaytı aktif et
+            goTo(0);
+
+            // Ok wrapper yüksekliğini slayt yüksekliğiyle eşitle
+            const slidesEl = section.querySelector('.bxh-slides');
+            function syncArrowHeight() {
+                section.style.setProperty('--bxh-slides-h', slidesEl.offsetHeight + 'px');
+            }
+            syncArrowHeight();
+            new ResizeObserver(syncArrowHeight).observe(slidesEl);
+
+            // Oklar
+            btnPrev.addEventListener('click', function () { goTo(current - 1); restartTimer(); });
+            btnNext.addEventListener('click', function () { goTo(current + 1); restartTimer(); });
+
+            // Klavye navigasyonu
+            section.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowLeft') { goTo(current - 1); restartTimer(); }
+                if (e.key === 'ArrowRight') { goTo(current + 1); restartTimer(); }
+            });
+
+            // Autoplay
+            function startTimer() {
+                if (!AUTOPLAY_DELAY) return;
+                timer = setInterval(function () { goTo(current + 1); }, AUTOPLAY_DELAY);
+            }
+
+            function restartTimer() {
+                clearInterval(timer);
+                startTimer();
+            }
+
+            if (PAUSE_ON_HOVER) {
+                section.addEventListener('mouseenter', function () { clearInterval(timer); });
+                section.addEventListener('mouseleave', startTimer);
+            }
+
+            startTimer();
+        });
+    }());
+</script>

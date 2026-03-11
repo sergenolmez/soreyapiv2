@@ -1,0 +1,251 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer
+  style="margin-top: 20px;"
+  class="site-footer"
+  aria-labelledby="footer-title"
+>
+  <div class="container">
+    <div class="footer-brand">
+      <a href="/">
+        <img
+          src="/images/logo-light.png"
+          width="171"
+          height="49"
+          alt="Sore Yapı Logo"
+        />
+      </a>
+    </div>
+    <!-- <nav class="footer-nav" aria-label="Footer menü">
+      <a href="#biz-kimiz">Biz Kimiz</a>
+      <a href="#kesifler">Keşifler</a>
+      <a href="/projects">Projeler</a>
+      <a href="#vakif">Vakfımız</a>
+      <a href="#kariyer">Ekibimize Katıl</a>
+    </nav> -->
+
+    <!-- <div class="footer-cta">
+      <a class="btn btn--ghost footer-call" href="tel:+90-444-0-633">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          ><path
+            fill="currentColor"
+            d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.85 21 3 13.15 3 3c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.24 1.02l-2.2 2.2Z"
+          ></path></svg
+        >
+        <span>444 0 633</span>
+      </a>
+    </div> -->
+    <br />
+    <div class="footer-social" aria-label="Sosyal bağlantılar">
+      <a
+        aria-label="Facebook"
+        target="_blank"
+        href="https://www.facebook.com/profile.php?id=61581679710767"
+        class="circle"
+      >
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a aria-label="YouTube" target="_blank" href="#" class="circle">
+        <i class="fa fa-youtube"></i>
+      </a>
+      <a
+        aria-label="LinkedIn"
+        target="_blank"
+        href="https://www.linkedin.com/company/soreyapi"
+        class="circle"
+      >
+        <i class="fa fa-linkedin"></i>
+      </a>
+      <a
+        aria-label="Instagram"
+        target="_blank"
+        href="https://www.instagram.com/soreyapi/"
+        class="circle"
+      >
+        <i class="fa fa-instagram"></i>
+      </a>
+    </div>
+    <div class="footer-emails">
+      <a href="mailto:info@soreyapi.com">info@soreyapi.com</a>
+    </div>
+    <div class="footer-legal">
+      <a href="/yasal/gizlilik-politikasi">Gizlilik Politikası</a>
+      <span aria-hidden="true">·</span>
+      <a href="/yasal/kvkk-aydinlatma">KVKK Aydınlatma</a>
+      <span aria-hidden="true">·</span>
+      <a href="/yasal/gizlilik-politikasi">Gizlilik Politikası</a>
+      <span aria-hidden="true">·</span>
+      <a href="/yasal/kullanim-sartlari">Kullanım Şartları</a>
+    </div>
+    <div class="footer-copy">
+      <span class="copy"
+        >Copyright © {year} Soreyapi. All rights reserved.</span
+      >
+    </div>
+    <div class="brand">
+      <span>Powered by</span>
+      <a href="https://fikiryapim.com" target="_blank">
+        <img
+          src="/images/fikiryapim-logo-light.svg"
+          alt="Fikir Yapım Logo"
+          width="100"
+          height="30"
+        />
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #161616;
+    padding: 4rem 0 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 50px 50px 0 0;
+  }
+  .site-footer .footer-brand {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .site-footer .footer-brand:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.05);
+  }
+  .site-footer .footer-social {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .site-footer .footer-social .circle {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    color: #e8eaf1;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.03);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .site-footer .footer-social .circle i {
+    font-size: 18px;
+  }
+
+  .site-footer .footer-nav {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0.75rem 0 1.25rem;
+  }
+  .site-footer .footer-nav a {
+    color: #e8eaf1;
+    opacity: 0.9;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .site-footer .footer-nav a:hover {
+    opacity: 1;
+  }
+
+  .site-footer .footer-cta {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0 1.25rem;
+  }
+  .site-footer .footer-call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e8eaf1;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .site-footer .footer-emails {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0.75rem 0 1.25rem;
+    font-size: 1rem;
+  }
+  .site-footer .footer-emails a {
+    color: #b9bfcc;
+  }
+
+  .site-footer .footer-legal {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: #9aa3b2;
+    font-size: 0.8rem;
+  }
+
+  .site-footer .footer-copy {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: #9aa3b2;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .site-footer .footer-legal .copy {
+    justify-content: center;
+  }
+  .site-footer .footer-legal a {
+    color: #9aa3b2;
+  }
+  .site-footer .footer-legal .spacer {
+    flex: 1 1 auto;
+  }
+  .site-footer .brand {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: #9aa3b2;
+  }
+  .site-footer .brand a img {
+    filter: brightness(0) invert(1);
+    vertical-align: baseline;
+  }
+  @media (max-width: 640px) {
+    .site-footer {
+      padding: 3rem 0 2rem;
+    }
+    .site-footer .footer-nav {
+      gap: 1rem;
+    }
+    .site-footer .footer-emails {
+      gap: 1rem;
+    }
+    .site-footer .footer-legal {
+      justify-content: center;
+    }
+    .site-footer .footer-legal .spacer {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,197 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Teşekkürler - Sore Yapı"
+  description="Mesajınız için teşekkür ederiz. En kısa sürede size dönüş yapacağız."
+>
+  <!-- CONTENT START -->
+  <div class="page-content">
+    <!-- INNER PAGE BANNER -->
+    <div
+      class="wt-bnr-inr overlay-wraper bg-parallax bg-top-center"
+      data-stellar-background-ratio="0.5"
+      style="background-image:url(/images/banner/3.jpg);"
+    >
+      <div class="overlay-main bg-black opacity-07"></div>
+      <div class="container">
+        <div class="wt-bnr-inr-entry">
+          <div class="banner-title-outer">
+            <div class="banner-title-name">
+              <h2
+                class="text-white text-uppercase letter-spacing-5 font-18 font-weight-300 m-0"
+              >
+                TEŞEKKÜRLER
+              </h2>
+            </div>
+          </div>
+
+          <!-- BREADCRUMB ROW -->
+          <div class="p-tb20">
+            <div>
+              <ul class="wt-breadcrumb breadcrumb-style-2">
+                <li><a href="/">Anasayfa</a></li>
+                <li>Teşekkürler</li>
+              </ul>
+            </div>
+          </div>
+          <!-- BREADCRUMB ROW END -->
+        </div>
+      </div>
+    </div>
+    <!-- INNER PAGE BANNER END -->
+
+    <!-- THANK YOU SECTION START -->
+    <div class="section-full p-t80 p-b80">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <div
+              class="text-center bg-white p-a50 shadow-lg"
+              style="border-radius: 10px;"
+            >
+              <!-- Success Icon -->
+              <div class="m-b30">
+                <svg
+                  width="120"
+                  height="120"
+                  viewBox="0 0 120 120"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="margin: 0 auto;"
+                >
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="58"
+                    stroke="#fffddd"
+                    stroke-width="4"
+                    fill="#008000"></circle>
+                  <path
+                    d="M35 60L50 75L85 40"
+                    stroke="#fff"
+                    stroke-width="8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </div>
+
+              <!-- Thank You Message -->
+              <h2
+                class="text-uppercase m-b20"
+                style="font-size: 36px; font-weight: 700; color: #333;"
+              >
+                Talebiniz Alındı!
+              </h2>
+
+              <div class="wt-separator-outer m-b30">
+                <div
+                  class="wt-separator bg-primary"
+                  style="width: 80px; height: 3px; margin: 0 auto;"
+                >
+                </div>
+              </div>
+
+              <p class="font-16 m-b30" style="line-height: 1.8; color: #666;">
+                Bizimle iletişime geçtiğiniz için teşekkür ederiz.<br />
+                Mesajınız tarafımıza ulaştı ve <strong>en kısa sürede</strong> size
+                dönüş yapacağız.
+              </p>
+
+              <!-- Info Boxes -->
+              <div class="row m-b40">
+                <div class="col-md-6 m-b30">
+                  <div
+                    class="p-a30 bg-gray"
+                    style="border-radius: 8px; border-left: 4px solid #EFBB20;"
+                  >
+                    <div class="icon-md m-b15">
+                      <span class="icon-cell site-text-primary">
+                        <i class="flaticon-clock" style="font-size: 40px;"></i>
+                      </span>
+                    </div>
+                    <h4 class="font-weight-600 m-b10">Yanıt Süresi</h4>
+                    <p class="m-b0" style="color: #666;">
+                      1-2 iş günü içinde<br />size geri dönüş yapacağız
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-6 m-b30">
+                  <div
+                    class="p-a30 bg-gray"
+                    style="border-radius: 8px; border-left: 4px solid #EFBB20;"
+                  >
+                    <div class="icon-md m-b15">
+                      <span class="icon-cell site-text-primary">
+                        <i class="flaticon-phone-call" style="font-size: 40px;"
+                        ></i>
+                      </span>
+                    </div>
+                    <h4 class="font-weight-600 m-b10">Acil Durum</h4>
+                    <p class="m-b0" style="color: #666;">
+                      <a href="tel:+902569110331" class="site-text-primary"
+                        >+90 (256) 911 03 31</a
+                      ><br />
+                      numarasından bize ulaşabilirsiniz
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="row">
+                <div class="col-md-12 m-b20">
+                  <a
+                    href="/"
+                    class="site-button btn-block text-uppercase letter-spacing-2"
+                  >
+                    <i class="fa fa-home m-r10"></i>
+                    Anasayfaya Dön!
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- THANK YOU SECTION END -->
+  </div>
+  <!-- CONTENT END -->
+  <script>
+    (function () {
+      // URL parametrelerini al
+      const params = new URLSearchParams(window.location.search);
+      const status = params.get("status");
+
+      // Bu sayfa daha önce gösterildi mi? (refresh / geri tuşu vs.)
+      const alreadyShown = sessionStorage.getItem("thankYouShown");
+
+      // 1) status=ok DEĞİLSE → bu sayfa formdan gelmemiş, direkt açılmış demektir → anasayfaya
+      if (status !== "ok") {
+        window.location.replace("/");
+        return;
+      }
+
+      // 2) Daha önce gösterildiyse (refresh, tekrar giriş, geri tuşu) → anasayfaya
+      if (alreadyShown) {
+        window.location.replace("/");
+        return;
+      }
+
+      // 3) İlk kez geldiyse → flag koy
+      sessionStorage.setItem("thankYouShown", "true");
+
+      // Burada 15 saniye boyunca teşekkür içeriğin görünebilir
+      // Örn: "Talebiniz alındı, sizi arayacağız" metni vs.
+
+      // 4) 15 saniye sonra otomatik olarak anasayfaya yönlendir
+      setTimeout(function () {
+        sessionStorage.removeItem("thankYouShown");
+        window.location.replace("/");
+      }, 15000);
+    })();
+  </script>
+</BaseLayout>

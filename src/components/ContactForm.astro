@@ -1,0 +1,707 @@
+<div id="contact-form-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-secondry">
+        <h4 class="modal-title text-black">İletişim Formu</h4>
+        <button type="button" class="close" data-bs-dismiss="modal"
+          >&times;</button
+        >
+      </div>
+      <div class="modal-body">
+        <form
+          action="/api/form-handler.php"
+          id="contact-form"
+          class="form-horizontal mb-lg"
+          method="POST"
+          novalidate
+        >
+          <!-- Honeypot alan (bot doldurursa reddedilecek) -->
+          <input
+            type="text"
+            name="website_url"
+            autocomplete="off"
+            tabindex="-1"
+            aria-hidden="true"
+            style="position:absolute;left:-9999px;opacity:0;"
+          />
+          <!-- Form açılış zaman damgası -->
+          <input type="hidden" name="form_start" value="" />
+          <div class="row form-group mt-lg">
+            <label class="col-sm-3 control-label">Ad Soyad</label>
+            <div class="col-sm-9">
+              <input
+                name="name"
+                class="form-control"
+                placeholder="Adınızı ve soyadınızı yazın..."
+                required
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="row form-group mt-lg">
+            <label class="col-sm-3 control-label">Telefon</label>
+            <div class="col-sm-9">
+              <input
+                name="phone"
+                class="form-control"
+                placeholder="Telefon numaranızı yazın..."
+                type="tel"
+              />
+            </div>
+          </div>
+          <div class="row form-group">
+            <label class="col-sm-3 control-label">Hangi Proje</label>
+            <div class="col-sm-9">
+              <select name="project" class="form-control" required>
+                <option value="" disabled selected>Proje seçin...</option>
+                <option value="N Plus Nazilli">N Plus Nazilli</option>
+                <option value="Atapark">AtaPark</option>
+                <option value="EgelPark">EgelPark</option>
+              </select>
+            </div>
+          </div>
+          <div class="row form-group">
+            <label class="col-sm-3 control-label">Mesaj</label>
+            <div class="col-sm-9">
+              <textarea
+                rows="5"
+                name="message"
+                class="form-control"
+                placeholder="Mesajınızı yazın..."
+                required></textarea>
+            </div>
+          </div>
+          <!-- JS'te FormData'ya eklenecek; fallback için gizli alan -->
+          <input type="hidden" name="source_page" value="" />
+          <!-- Meta Pixel dedup & cookie passthrough -->
+          <input type="hidden" name="fb_event_id" value="" />
+          <input type="hidden" name="fbp" value="" />
+          <input type="hidden" name="fbc" value="" />
+          <div class="row form-group mt-lg kvkk-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-12 consent-wrapper">
+              <div class="form-check mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="consent-kvkk"
+                  name="consent_kvkk"
+                  checked
+                />
+                <label class="form-check-label" for="consent-kvkk">
+                  <small>
+                    <strong>KVKK Aydınlatma Metni</strong>'ni okudum, kişisel
+                    verilerimin
+                    <a
+                      href="/yasal/kvkk-aydinlatma"
+                      target="_blank"
+                      rel="noopener">işlenmesini</a
+                    >
+                    kabul ediyorum.
+                  </small>
+                </label>
+              </div>
+
+              <div class="form-check mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="consent-marketing"
+                  name="consent_marketing"
+                  checked
+                />
+                <label class="form-check-label" for="consent-marketing">
+                  <small>
+                    Kampanya ve bilgilendirme amaçlı ticari elektronik ileti
+                    almayı kabul ediyorum.
+                  </small>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="site-button text-uppercase button-sm letter-spacing-2 m-r15"
+          data-bs-dismiss="modal"
+        >
+          Kapat
+        </button>
+        <button
+          type="submit"
+          form="contact-form"
+          class="site-button text-uppercase button-sm letter-spacing-2"
+        >
+          Gönder
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // SweetAlert2 + intl-tel-input ile hazır modal bildirim + güvenli fetch submit
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contact-form");
+    const submitBtn = document.querySelector(
+      'button[type="submit"][form="contact-form"]',
+    );
+    const modal = document.getElementById("contact-form-modal");
+    if (!form || !submitBtn) return;
+
+    // --- Deep link modal auto-open & hash/query listeners ---
+    const shouldOpenFromHash = () => {
+      const raw = (location.hash || "").slice(1).toLowerCase();
+      if (!raw) return false;
+      const variants = [
+        "modal",
+        "modals",
+        "contact",
+        "contact-modal",
+        "contactform",
+        "contact-form",
+        "iletisim",
+        "form",
+        "teklif",
+      ];
+      return variants.includes(raw);
+    };
+    const shouldOpenFromQuery = () => {
+      const params = new URLSearchParams(location.search);
+      const open = (params.get("open") || "").toLowerCase();
+      if (!open) return false;
+      const variants = ["contact", "modal", "form", "iletisim"];
+      return variants.includes(open);
+    };
+    const showModal = () => {
+      try {
+        const existing = window.bootstrap?.Modal?.getInstance(modal);
+        if (existing) {
+          existing.show();
+          return;
+        }
+        if (window.bootstrap?.Modal) {
+          const inst = new window.bootstrap.Modal(modal);
+          inst.show();
+        } else {
+          // Fallback: add Bootstrap classes
+          modal.classList.add("show");
+          modal.style.display = "block";
+          document.body.classList.add("modal-open");
+        }
+      } catch {}
+    };
+    const autoOpenIfNeeded = () => {
+      if (shouldOpenFromHash() || shouldOpenFromQuery()) {
+        showModal();
+      }
+    };
+    // Initial check
+    autoOpenIfNeeded();
+    // React to hash changes
+    window.addEventListener("hashchange", autoOpenIfNeeded);
+    // Allow programmatic open via postMessage (optional future use)
+    window.addEventListener("message", (e) => {
+      if (e?.data === "open-contact-modal") showModal();
+    });
+
+    // Optional debug: trigger a Lead event without form submit (?testlead=1)
+    try {
+      const qp = new URLSearchParams(location.search);
+      if (qp.get("testlead") === "1" && window.fbq) {
+        const eid =
+          "debug-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+        window.fbq(
+          "track",
+          "Lead",
+          { value: 0, currency: "TRY", debug: true },
+          { eventID: eid },
+        );
+        // Also log to console for visibility
+        console.log("[Lead Debug] Sent test Lead event with eventID", eid);
+      }
+    } catch {}
+
+    // iOS'ta input focus olduğunda otomatik zoom'u ek olarak engellemek için
+    // modal açıkken viewport'u geçici olarak kilitle (maximum-scale=1, user-scalable=no)
+    const viewportMeta = document.querySelector('meta[name="viewport"]');
+    const originalViewportContent = viewportMeta?.getAttribute("content") || "";
+    const lockViewport = () => {
+      if (!viewportMeta) return;
+      const base = originalViewportContent
+        .replace(/,?\s*maximum-scale=[^,]*/i, "")
+        .replace(/,?\s*user-scalable=[^,]*/i, "");
+      viewportMeta.setAttribute(
+        "content",
+        `${base}, maximum-scale=1, user-scalable=no`,
+      );
+    };
+    const unlockViewport = () => {
+      if (!viewportMeta) return;
+      viewportMeta.setAttribute("content", originalViewportContent);
+    };
+
+    // SweetAlert2 CDN'lerini tek sefer yükle
+    const ensureSwalLoaded = () =>
+      new Promise((resolve) => {
+        if (window.Swal) return resolve();
+        const linkId = "swal2-css";
+        if (!document.getElementById(linkId)) {
+          const l = document.createElement("link");
+          l.id = linkId;
+          l.rel = "stylesheet";
+          l.href =
+            "https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css";
+          document.head.appendChild(l);
+        }
+        const s = document.createElement("script");
+        s.src =
+          "https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js";
+        s.onload = () => resolve();
+        document.head.appendChild(s);
+      });
+
+    // intl-tel-input CDN loader (CSS + JS + utils)
+    const ensureIntlLoaded = () =>
+      new Promise((resolve) => {
+        if (window.intlTelInput) return resolve();
+        const cssId = "iti-css";
+        if (!document.getElementById(cssId)) {
+          const l = document.createElement("link");
+          l.id = cssId;
+          l.rel = "stylesheet";
+          l.href =
+            "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/css/intlTelInput.min.css";
+          document.head.appendChild(l);
+        }
+        const s = document.createElement("script");
+        s.src =
+          "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/js/intlTelInput.min.js";
+        s.onload = () => {
+          // load utils script for formatting/placeholder
+          const u = document.createElement("script");
+          u.src =
+            "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/js/utils.js";
+          u.onload = () => resolve();
+          document.head.appendChild(u);
+        };
+        document.head.appendChild(s);
+      });
+
+    let iti = null;
+    const phoneInput = form.querySelector('input[name="phone"]');
+    const startField = form.querySelector('input[name="form_start"]');
+    if (startField) startField.value = Date.now().toString();
+
+    // Initialize intl-tel-input (country flag should appear instantly without geo lookup delay)
+    (async () => {
+      if (!phoneInput) return;
+      try {
+        await ensureIntlLoaded();
+        iti = window.intlTelInput(phoneInput, {
+          initialCountry: "tr", // direkt TR başlat, bayrak hemen gelsin
+          utilsScript:
+            "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/js/utils.js",
+          nationalMode: false,
+          autoHideDialCode: false,
+          autoPlaceholder: "aggressive",
+          separateDialCode: true, // ülke kodu input dışına alındı
+          preferredCountries: ["tr"],
+          formatOnDisplay: true,
+        });
+        // Flag container hazır değilse çok kısa bir mikro gecikmeyle yeniden boyutla
+        requestAnimationFrame(() => {
+          if (phoneInput.parentElement?.classList.contains("iti")) {
+            phoneInput.parentElement.style.width = "100%";
+          }
+        });
+      } catch (err) {
+        iti = null; // fallback
+      }
+    })();
+
+    let isSubmitting = false;
+    let abortController = null;
+
+    const lock = () => {
+      isSubmitting = true;
+      form.dataset.submitting = "true";
+      submitBtn.disabled = true;
+      submitBtn.setAttribute("aria-disabled", "true");
+      if (!submitBtn.dataset.originalText) {
+        submitBtn.dataset.originalText = submitBtn.textContent || "";
+      }
+      submitBtn.textContent = "Gönderiliyor...";
+      form.classList.add("is-submitting");
+    };
+
+    const unlock = () => {
+      isSubmitting = false;
+      delete form.dataset.submitting;
+      submitBtn.disabled = false;
+      submitBtn.removeAttribute("aria-disabled");
+      if (submitBtn.dataset.originalText) {
+        submitBtn.textContent = submitBtn.dataset.originalText;
+      }
+      form.classList.remove("is-submitting");
+      if (abortController) {
+        abortController = null;
+      }
+    };
+
+    const toFormData = () => {
+      const fd = new FormData(form);
+      fd.set("source_page", window.location.href);
+      if (!fd.get("form_start")) fd.set("form_start", Date.now().toString());
+      // Read Meta cookies `_fbp` and `_fbc` if present
+      const getCookie = (name) =>
+        document.cookie
+          .split(";")
+          .map((c) => c.trim())
+          .find((c) => c.startsWith(name + "="))
+          ?.split("=")[1] || "";
+      const fbp = getCookie("_fbp");
+      const fbc = getCookie("_fbc");
+      if (fbp) fd.set("fbp", fbp);
+      if (fbc) fd.set("fbc", fbc);
+      // Ensure we have a dedup event id
+      if (!fd.get("fb_event_id")) {
+        // lightweight UUID v4
+        const eid =
+          typeof crypto !== "undefined" && crypto.randomUUID
+            ? crypto.randomUUID()
+            : "eid-" + Math.random().toString(36).slice(2) + Date.now();
+        fd.set("fb_event_id", eid);
+      }
+      if (phoneInput) {
+        let value = phoneInput.value.trim();
+        if (iti && value !== "") {
+          try {
+            const formatted = iti.getNumber();
+            fd.set("phone", formatted || value);
+          } catch (e) {
+            fd.set("phone", value);
+          }
+        } else fd.set("phone", value);
+      }
+      return fd;
+    };
+
+    const basicClientSpamCheck = () => {
+      const honeypot = form.querySelector('input[name="website_url"]');
+      if (honeypot && honeypot.value.trim() !== "") return "honeypot";
+      const startVal = startField ? parseInt(startField.value, 10) : 0;
+      if (startVal && Date.now() - startVal < 1200) return "too-fast";
+      return null;
+    };
+
+    // Submit'i yakala ve fetch + Swal ile yönet
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (isSubmitting) return; // ikinci kez tetiklenmesin
+
+      const spamReason = basicClientSpamCheck();
+      if (spamReason) {
+        try {
+          await ensureSwalLoaded();
+        } catch {}
+        Swal.fire({
+          icon: "error",
+          title: "Geçersiz gönderim",
+          text: "Form doğrulaması başarısız. Lütfen tekrar deneyin.",
+        });
+        return;
+      }
+
+      // client-side phone validation when intl loaded
+      if (phoneInput && iti) {
+        const raw = phoneInput.value.trim();
+        if (raw !== "" && !iti.isValidNumber()) {
+          await ensureSwalLoaded();
+          Swal.fire({
+            icon: "error",
+            title: "Geçersiz telefon",
+            text: "Lütfen geçerli bir telefon numarası girin.",
+          });
+          return;
+        }
+      }
+
+      lock();
+
+      try {
+        await ensureSwalLoaded();
+        abortController = new AbortController();
+        const timeoutId = setTimeout(() => abortController?.abort(), 20000); // 20sn zaman aşımı
+
+        const res = await fetch(form.action, {
+          method: form.method || "POST",
+          body: toFormData(),
+          signal: abortController.signal,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        clearTimeout(timeoutId);
+
+        const isJson = res.headers
+          .get("content-type")
+          ?.includes("application/json");
+        const data = isJson ? await res.json() : {};
+
+        if (res.ok && (data.success === true || isJson)) {
+          // Başarılı: teşekkür sayfasına gitmek yerine popup göster
+          Swal.fire({
+            icon: "success",
+            title: "Başvurunuz alındı",
+            text: data.message || "En kısa sürede sizinle iletişime geçeceğiz.",
+            confirmButtonText: "Tamam",
+            timer: 6000,
+            timerProgressBar: true,
+          });
+
+          // Browser-side Meta Pixel event for dedup with CAPI
+          try {
+            const eid = new FormData(form).get("fb_event_id") || "";
+            // Extract selected project for content_name & mapped code
+            const sel = form.querySelector('select[name="project"]');
+            const rawProject = sel ? sel.value : "";
+            const trans = {
+              ü: "u",
+              Ü: "u",
+              ş: "s",
+              Ş: "s",
+              ı: "i",
+              İ: "i",
+              ğ: "g",
+              Ğ: "g",
+              ç: "c",
+              Ç: "c",
+              ö: "o",
+              Ö: "o",
+            };
+            const norm = rawProject
+              .toLowerCase()
+              .replace(/[üÜşŞıİğĞçÇöÖ]/g, (c) => trans[c])
+              .replace(/[^a-z0-9]+/g, "");
+            const map = {
+              trendroyal4: "2",
+              kusadasitrendroyal4: "2",
+              trendroyal3: "1",
+              kusadasitrendroyal3: "1",
+              atapark: "3",
+              kusadasiatapark: "3",
+              egelpark: "4",
+              kusadasiegelpark: "4",
+            };
+            const projectCode = map[norm] || undefined;
+            const params = {
+              content_name: rawProject || undefined,
+              project_code: projectCode,
+              value: 0,
+              currency: "TRY",
+            };
+            if (window.fbq && eid) {
+              window.fbq("track", "Lead", params, { eventID: eid });
+            } else if (window.fbq) {
+              window.fbq("track", "Lead", params);
+            }
+          } catch {}
+
+          // formu sıfırla, modalı kapat
+          form.reset();
+          if (iti && typeof iti.setNumber === "function") {
+            try {
+              iti.setNumber("");
+            } catch (e) {}
+          }
+          const event = new Event("change", { bubbles: true });
+          form.dispatchEvent(event);
+          try {
+            const bsModal = window.bootstrap?.Modal?.getInstance(modal);
+            if (bsModal) bsModal.hide();
+          } catch {}
+
+          unlock();
+          return;
+        }
+
+        // Hata akışı
+        const errMsg =
+          data.message || "Form gönderilemedi. Lütfen tekrar deneyin.";
+        Swal.fire({ icon: "error", title: "Hata", text: errMsg });
+        unlock();
+      } catch (err) {
+        const aborted = err && (err.name === "AbortError" || err.code === 20);
+        await ensureSwalLoaded();
+        Swal.fire({
+          icon: "error",
+          title: aborted ? "Zaman Aşımı" : "Hata",
+          text: aborted
+            ? "İstek zaman aşımına uğradı. Lütfen tekrar deneyin."
+            : "Bir hata oluştu. Lütfen tekrar deneyin.",
+        });
+        unlock();
+      }
+    });
+
+    // Modal kapandığında buton metnini ve durumu sıfırla
+    if (modal) {
+      modal.addEventListener("shown.bs.modal", () => {
+        // modal açıldığında zoom'u devre dışı bırak
+        lockViewport();
+      });
+      modal.addEventListener("hidden.bs.modal", () => {
+        unlockViewport();
+        unlock();
+      });
+    }
+
+    // URL ile modal'ı doğrudan açma (deep-link)
+    // Örnekler:
+    //  - https://soreyapi.com/#modal
+    //  - https://soreyapi.com/#modals
+    //  - https://soreyapi.com/#contact veya #iletisim
+    //  - https://soreyapi.com/?modal=contact
+    const aliasSet = new Set([
+      "modal",
+      "modals",
+      "contact",
+      "iletisim",
+      "contact-form",
+      "contact-form-modal",
+    ]);
+
+    const matchDeepLink = () => {
+      const h = (window.location.hash || "").replace(/^#/, "").toLowerCase();
+      if (h && aliasSet.has(h)) return true;
+      const sp = new URLSearchParams(window.location.search);
+      const qp = (sp.get("modal") || sp.get("open") || sp.get("popup") || "")
+        .toString()
+        .toLowerCase();
+      return qp && aliasSet.has(qp);
+    };
+
+    const showContactModal = () => {
+      if (!modal) return;
+      try {
+        const BSM = window.bootstrap?.Modal;
+        if (BSM) {
+          const instance = BSM.getOrCreateInstance
+            ? BSM.getOrCreateInstance(modal)
+            : new BSM(modal);
+          instance.show();
+          return;
+        }
+      } catch {}
+      // Basit fallback (bootstrap bulunamazsa)
+      modal.classList.add("show");
+      modal.style.display = "block";
+      modal.removeAttribute("aria-hidden");
+      modal.setAttribute("aria-modal", "true");
+      document.body.classList.add("modal-open");
+      if (!document.querySelector(".modal-backdrop")) {
+        const backdrop = document.createElement("div");
+        backdrop.className = "modal-backdrop fade show";
+        document.body.appendChild(backdrop);
+      }
+    };
+
+    // İlk yüklemede kontrol et
+    if (matchDeepLink()) {
+      // Küçük gecikme: Bootstrap instance hazır olsun
+      setTimeout(showContactModal, 100);
+    }
+    // Hash değiştiğinde tekrar kontrol et
+    window.addEventListener("hashchange", () => {
+      if (matchDeepLink()) setTimeout(showContactModal, 0);
+    });
+
+    // Ekstra güvenlik: Enter ile form tekrar tekrar tetiklenmesin
+    form.addEventListener("keydown", (e) => {
+      if (isSubmitting && (e.key === "Enter" || e.keyCode === 13)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+
+    // iOS hedefli ek önlem: form alanına odaklanınca viewport kilitle, blur'da geri al
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      form.addEventListener("focusin", lockViewport);
+      form.addEventListener("focusout", () => {
+        // küçük gecikme ile eski haline döndür
+        setTimeout(unlockViewport, 150);
+      });
+    }
+  });
+</script>
+
+<style is:inline>
+  /* iOS Safari, small devices: prevent auto-zoom on input focus by ensuring >=16px */
+  @media (max-width: 767px) {
+    :global(#contact-form-modal input),
+    :global(#contact-form-modal select),
+    :global(#contact-form-modal textarea),
+    :global(#contact-form-modal .form-control) {
+      font-size: 16px !important;
+    }
+    /* intl-tel-input wrapped input */
+    :global(#contact-form-modal .iti input) {
+      font-size: 16px !important;
+    }
+  }
+
+  /* Avoid layout jump inside modal when keyboard opens */
+  :global(#contact-form-modal .modal-body) {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Optional: keep overall text sizing consistent on iOS */
+  :global(html) {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Telefon alanı (separateDialCode=true) genel hizalama */
+  :global(#contact-form-modal .iti) {
+    width: 100% !important;
+    display: block;
+  }
+  :global(#contact-form-modal .iti .iti__flag-container) {
+    left: 0; /* ayrı kod bölmesi solda */
+  }
+  :global(#contact-form-modal .iti input.iti__tel-input) {
+    padding-left: 6px !important; /* ayrı kod kutusu olduğundan ekstra boşluk gerekmez */
+    width: 100% !important;
+    box-sizing: border-box;
+    line-height: 1.5;
+    height: auto;
+  }
+  :global(#contact-form-modal .iti__selected-dial-code) {
+    font-weight: 500;
+  }
+  .iti {
+    width: 100% !important;
+  }
+  /* KVKK consent group styling */
+  :global(#contact-form-modal .kvkk-group .form-check-input) {
+    cursor: pointer;
+  }
+  :global(#contact-form-modal .kvkk-group small) {
+    color: #333;
+    line-height: 1.35;
+    display: inline-block;
+  }
+  :global(#contact-form-modal .kvkk-group a) {
+    text-decoration: underline;
+  }
+  @media (max-width: 480px) {
+    :global(#contact-form-modal .kvkk-group small) {
+      font-size: 12px;
+    }
+  }
+</style>

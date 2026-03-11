@@ -1,0 +1,131 @@
+<!-- Vertical Call Button -->
+<div class="call-button" id="callButton">
+  <a
+    href="tel:+905551234567"
+    class="call-button__link"
+    aria-label="Sizi arayalım - Telefon numaramızı arayın"
+    type="button"
+    data-bs-toggle="modal"
+    data-bs-target="#contact-form-modal"
+  >
+    <div class="call-button__text">
+      <i class="fa fa-phone fa-lg" aria-hidden="true"></i> &nbsp; Sizi Arayalım
+    </div>
+  </a>
+</div>
+
+<style>
+  /* ========== Vertical Call Button ========== */
+  .call-button {
+    --call-primary: #000000ff;
+    --call-primary-dark: #000000ff;
+    --call-secondary: rgb(0, 0, 0);
+    --call-text: #ffffff;
+    --call-shadow: 0 4px 20px rgba(166, 124, 82, 0.3);
+    --call-shadow-hover: 0 6px 25px rgba(166, 124, 82, 0.4);
+    /* Bootstrap modal z-index: 1050, backdrop: 1040. Keep this lower so modal sits above. */
+    --call-z: 900;
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: var(--call-z);
+    font-family: "Poppins", sans-serif;
+  }
+
+  .call-button__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--call-primary);
+    color: var(--call-text);
+    text-decoration: none;
+    width: 50px;
+    height: 200px;
+    border-radius: 0 40px 40px 0;
+    box-shadow: var(--call-shadow);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 20px 0;
+  }
+
+  .call-button__link:hover,
+  .call-button__link:focus {
+    transform: translateX(5px);
+    box-shadow: var(--call-shadow-hover);
+    background: var(--call-secondary);
+  }
+
+  .call-button__link:focus {
+    outline: 3px solid rgba(166, 124, 82, 0.5);
+    outline-offset: 3px;
+  }
+
+  .call-button__text {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    color: var(--call-text);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .call-button__link {
+      width: 70px;
+      height: 170px;
+      border-radius: 0 35px 35px 0;
+      gap: 15px;
+    }
+
+    .call-button__text {
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .call-button__link {
+      width: 60px;
+      height: 150px;
+      border-radius: 0 30px 30px 0;
+      gap: 12px;
+    }
+
+    .call-button__text {
+      font-size: 11px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .call-button__link {
+      transition: none;
+    }
+
+    .call-button__icon {
+      transition: none;
+    }
+  }
+
+  @media print {
+    .call-button {
+      display: none;
+    }
+  }
+
+  /* When any modal is open, ensure button is beneath and non-interactive to avoid overlap issues on mobile */
+  :global(body.modal-open) .call-button {
+    z-index: var(--call-z); /* stays lower than modal */
+    opacity: 0.4;
+    pointer-events: none; /* prevent accidental taps under modal */
+    transition: opacity 0.25s ease;
+  }
+  :global(body.modal-open) .call-button__link {
+    transform: none; /* disable hover transform while disabled */
+  }
+</style>

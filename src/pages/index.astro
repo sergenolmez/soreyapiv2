@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "@/components/Hero.astro";
+import Partners from "@/components/OurPartners.astro";
+import Welcome from "@/components/Welcome.astro";
+import IconBox from "@/components/IconBox.astro";
+import Projects from "@/components/Projects.astro";
+---
+
+<BaseLayout
+  title="Sore Yapı"
+  description="Sore Yapı'nın resmi web sitesidir. İnşaat ve gayrimenkul sektöründeki uzmanlığımız, projelerimiz ve hizmetlerimiz hakkında bilgi edinin."
+  keywords="Sore Yapı, inşaat, gayrimenkul, projeler, hizmetler, kalite, güven, Kuşadası, Aydın"
+  isHome={true}
+>
+  <Hero />
+  <Welcome />
+  <Partners />
+  <IconBox />
+  <Projects />
+</BaseLayout>

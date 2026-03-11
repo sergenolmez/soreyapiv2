@@ -1,0 +1,147 @@
+# Sore Yapı - Apache Configuration
+# soreyapi.com için .htaccess ayarları
+
+# ====================================
+# 1. HTTPS Yönlendirmesi
+# ====================================
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ====================================
+# 2. WWW'siz domain yönlendirmesi
+# ====================================
+RewriteCond %{HTTP_HOST} ^www\.soreyapi\.com [NC]
+RewriteRule ^(.*)$ https://soreyapi.com/$1 [L,R=301]
+
+# ====================================
+# 3. Index sayfasını anasayfaya yönlendir
+# ====================================
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+index\.html [NC]
+RewriteRule ^ / [R=301,L]
+
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+index [NC]
+RewriteRule ^ / [R=301,L]
+
+# ====================================
+# 4. .html uzantılarını kaldır
+# ====================================
+# .html ile erişilirse uzantısız yönlendir
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.html [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# .html olmadan erişim
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*?)/?$ $1.html [L]
+
+# ====================================
+# 5. Trailing slash'leri kaldır
+# ====================================
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [R=301,L]
+
+# ====================================
+# 6. Güvenlik Ayarları
+# ====================================
+# Dizin listelemeyi kapat
+Options -Indexes
+
+# Dosya erişim izinlerini ayarla
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|sql)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+# ====================================
+# 7. Karakter Kodlaması
+# ====================================
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .xml .json .rss .atom
+
+# ====================================
+# 8. Tarayıcı Önbellekleme
+# ====================================
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Resimler - 1 yıl
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # CSS ve JavaScript - 1 ay
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/x-javascript "access plus 1 month"
+  
+  # Fontlar - 1 yıl
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+  
+  # HTML - 1 saat
+  ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# ====================================
+# 9. Gzip Sıkıştırma
+# ====================================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/atom+xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ====================================
+# 10. Güvenlik Header'ları
+# ====================================
+<IfModule mod_headers.c>
+  # XSS Koruması
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # Content Type sniffing'i engelle
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Clickjacking koruması
+  Header set X-Frame-Options "SAMEORIGIN"
+  
+  # Referrer Policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Permissions Policy
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ====================================
+# 11. Özel Hata Sayfaları (opsiyonel)
+# ====================================
+# ErrorDocument 404 /404.html
+# ErrorDocument 403 /403.html
+# ErrorDocument 500 /500.html
+
+Redirect 301 /projelerimiz/ https://soreyapi.com/
+Redirect 301 /hizmetlerimiz/ https://soreyapi.com/faaliyetler/
+Redirect 301 /yapi-malzemelerimiz/ https://soreyapi.com/
+Redirect 301 /partnerlerimiz/ https://soreyapi.com/
+Redirect 301 /sss/ https://soreyapi.com/
+Redirect 301 /type/quote/ https://soreyapi.com/
+Redirect 301 /merhaba-dunya/ https://soreyapi.com/
+Redirect 301 /modern-mimari-ile-dogayi-bulusturan-projeler/ https://soreyapi.com/

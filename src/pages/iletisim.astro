@@ -1,0 +1,166 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Bize Ulaşın - Sore Yapı "
+  description="Sore Yapı ile iletişime geçin. Sorularınız, önerileriniz veya işbirliği talepleriniz için bize ulaşın."
+>
+  <div class="page-wraper">
+    <!-- CONTENT START -->
+    <div class="page-content">
+      <!-- INNER PAGE BANNER -->
+      <div
+        class="wt-bnr-inr overlay-wraper bg-parallax bg-top-center"
+        data-stellar-background-ratio="0.5"
+        style="background-image:url(/images/banner/3.jpg);"
+      >
+        <div class="overlay-main bg-black opacity-07"></div>
+        <div class="container">
+          <div class="wt-bnr-inr-entry">
+            <div class="banner-title-outer">
+              <div class="banner-title-name">
+                <h5
+                  class="text-white text-uppercase letter-spacing-5 font-18 font-weight-300 m-0"
+                >
+                  Sore Yapı <br /> Bize Ulaşın
+                </h5>
+              </div>
+            </div>
+            <!-- BREADCRUMB ROW -->
+            <div class="p-tb20">
+              <div>
+                <ul class="wt-breadcrumb breadcrumb-style-2">
+                  <li><a href="/">Anasayfa</a></li>
+                  <li>Bize Ulaşın</li>
+                </ul>
+              </div>
+            </div>
+            <!-- BREADCRUMB ROW END -->
+          </div>
+        </div>
+      </div>
+      <!-- INNER PAGE BANNER END -->
+
+      <!-- SECTION CONTENTG START -->
+      <div class="section-full p-tb80">
+        <!-- LOCATION BLOCK-->
+        <div class="container">
+          <!-- TITLE START -->
+          <div class="section-head text-left text-black">
+            <h2 class="text-uppercase font-36">Bize Ulaşın!</h2>
+            <div class="wt-separator-outer">
+              <div class="wt-separator bg-black"></div>
+            </div>
+          </div>
+          <!-- TITLE END -->
+          <!-- GOOGLE MAP & CONTACT FORM -->
+          <div class="section-content">
+            <!-- CONTACT FORM-->
+            <div class="wt-box">
+              <form
+                class="contact-form cons-contact-form"
+                method="post"
+                action="form-handler.php"
+              >
+                <div class="contact-one p-a40 p-r150">
+                  <div class="form-group">
+                    <input
+                      name="username"
+                      type="text"
+                      required
+                      class="form-control"
+                      placeholder="Ad Soyad"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <input
+                      name="telefon"
+                      type="text"
+                      class="form-control"
+                      required
+                      placeholder="Telefon"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <input
+                      name="email"
+                      type="text"
+                      class="form-control"
+                      required
+                      placeholder="E-mail"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <textarea
+                      name="message"
+                      rows="3"
+                      class="form-control"
+                      required
+                      placeholder="Mesajınız"></textarea>
+                  </div>
+
+                  <button
+                    name="submit"
+                    type="submit"
+                    value="Submit"
+                    class="site-button black radius-no text-uppercase"
+                  >
+                    <span class="font-12 letter-spacing-5">GÖNDER</span>
+                  </button>
+
+                  <div class="contact-info bg-black text-white p-a30">
+                    <div class="wt-icon-box-wraper left p-b30">
+                      <div class="icon-sm">
+                        <i class="iconmoon-smartphone-1"></i>
+                      </div>
+                      <div class="icon-content text-white">
+                        <h5 class="m-t0 text-uppercase">Telefon</h5>
+                        <p>+90 (256) 911 03 31</p>
+                      </div>
+                    </div>
+
+                    <div class="wt-icon-box-wraper left p-b30">
+                      <div class="icon-sm"><i class="iconmoon-email"></i></div>
+                      <div class="icon-content text-white">
+                        <h5 class="m-t0 text-uppercase">E-MAIL</h5>
+                        <p>info@soreyapi.com</p>
+                      </div>
+                    </div>
+
+                    <div class="wt-icon-box-wraper left">
+                      <div class="icon-sm"><i class="iconmoon-travel"></i></div>
+                      <div class="icon-content text-white">
+                        <h5 class="m-t0 text-uppercase">Adres</h5>
+                        <p>
+                          Türkmen, Kaymakam Şefik Gürpınarlı Sk Koz Apt No: 1 İç
+                          Kapı No: 101 Kuşadası/AYDIN
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-full">
+        <div class="gmap-outline">
+          <div id="gmap_canvas" class="google-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6299.542704182972!2d27.2724178!3d37.8656401!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14beaf23c8155bd3%3A0x793fdb88315c40f!2sSore%20Yap%C4%B1!5e0!3m2!1str!2str!4v1761485376305!5m2!1str!2str"
+              width="600"
+              height="450"></iframe>
+          </div>
+        </div>
+      </div>
+      <!-- SECTION CONTENT END -->
+    </div>
+    <!-- CONTENT END -->
+  </div></BaseLayout
+>

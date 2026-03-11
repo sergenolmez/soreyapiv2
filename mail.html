@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="supported-color-schemes" content="light dark" />
+    <style>
+      /* Dark mode desteği */
+      :root {
+        color-scheme: light dark;
+        supported-color-schemes: light dark;
+      }
+
+      /* Dark mode'da logo için beyaz arka plan */
+      @media (prefers-color-scheme: dark) {
+        .logo-wrapper {
+          background: #ffffff !important;
+          padding: 8px !important;
+          border-radius: 8px !important;
+        }
+        .notice-box {
+          background: #2a2a2a !important;
+          border-left-color: #ffd700 !important;
+        }
+        .notice-text {
+          color: #e0e0e0 !important;
+        }
+        .notice-strong {
+          color: #ffd700 !important;
+        }
+        .separator-line {
+          background: #444 !important;
+        }
+      }
+
+      /* Mobil cihazlar için responsive ayarlar */
+      @media only screen and (max-width: 600px) {
+        .signature-table {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        .main-row {
+          display: block !important;
+        }
+
+        .logo-cell {
+          display: block !important;
+          width: 100% !important;
+          padding: 0 0 16px 0 !important;
+          text-align: center !important;
+        }
+
+        .logo-wrapper {
+          display: inline-block !important;
+        }
+
+        .content-cell {
+          display: block !important;
+          width: 100% !important;
+          padding: 0 !important;
+          text-align: center !important;
+        }
+
+        .contact-table {
+          width: 100% !important;
+          margin: 0 auto !important;
+        }
+
+        .contact-row {
+          display: block !important;
+        }
+
+        .contact-item {
+          display: block !important;
+          width: 100% !important;
+          padding: 6px 0 !important;
+          text-align: center !important;
+        }
+
+        .name-text {
+          font-size: 18px !important;
+          text-align: center !important;
+        }
+
+        .title-text {
+          font-size: 13px !important;
+          text-align: center !important;
+        }
+
+        .address-text {
+          font-size: 12px !important;
+          text-align: center !important;
+        }
+
+        .contact-text {
+          font-size: 13px !important;
+          text-align: center !important;
+        }
+
+        .notice-box {
+          margin: 0 !important;
+        }
+
+        .notice-text {
+          font-size: 11px !important;
+          text-align: center !important;
+        }
+
+        .separator-line-row {
+          text-align: center !important;
+        }
+      }
+
+      /* Çok küçük ekranlar için */
+      @media only screen and (max-width: 360px) {
+        .name-text {
+          font-size: 16px !important;
+        }
+
+        .title-text {
+          font-size: 12px !important;
+        }
+
+        .contact-text {
+          font-size: 11px !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    "
+  >
+    <!-- ==== Modern Minimal Signature (SVG-ready) ==== -->
+    <table
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      role="presentation"
+      class="signature-table"
+      style="
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif;
+        color: #111;
+        line-height: 1.4;
+        max-width: 600px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      "
+    >
+      <tr>
+        <td style="vertical-align: top; padding: 0">
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            role="presentation"
+            style="width: 100%"
+          >
+            <tr class="main-row" style="font-size: 0">
+              <td
+                class="logo-cell"
+                style="
+                  vertical-align: top;
+                  padding: 0 16px 0 0;
+                  line-height: 0;
+                  width: 110px;
+                "
+              >
+                <div class="logo-wrapper" style="display: inline-block">
+                  <img
+                    src="https://soreyapi.com/images/logo.png"
+                    width="110"
+                    height="110"
+                    alt="Sore Yapı"
+                    style="
+                      display: block;
+                      border: 0;
+                      outline: none;
+                      text-decoration: none;
+                      max-width: 110px;
+                      width: 110px;
+                      height: auto;
+                    "
+                  />
+                </div>
+              </td>
+              <td
+                class="content-cell"
+                style="vertical-align: top; padding: 0; font-size: 13px"
+              >
+                <table
+                  cellpadding="0"
+                  cellspacing="0"
+                  role="presentation"
+                  style="width: 100%"
+                >
+                  <tr>
+                    <td
+                      class="name-text"
+                      style="
+                        padding: 0 0 4px 0;
+                        font-size: 17px;
+                        font-weight: 600;
+                        color: #111;
+                        line-height: 1.3;
+                      "
+                    >
+                      Batuğ ERDİR
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      class="title-text"
+                      style="
+                        padding: 0 0 10px 0;
+                        font-size: 13px;
+                        color: #666;
+                        line-height: 1.3;
+                      "
+                    >
+                      Kurucu · Sore Yapı
+                    </td>
+                  </tr>
+                  <!-- Adres Satırı -->
+                  <tr>
+                    <td
+                      class="address-text contact-text"
+                      style="
+                        padding: 0 0 10px 0;
+                        font-size: 12px;
+                        color: #666;
+                        line-height: 1.5;
+                      "
+                    >
+                      Türkmen Mah. Kaymakan Sk. Koz Apt No: 1 İç Kapı No: 101,
+                      09400 Kuşadası / Aydın
+                    </td>
+                  </tr>
+
+                  <!-- İletişim satırı -->
+                  <tr>
+                    <td style="padding: 0 0 10px 0">
+                      <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        role="presentation"
+                        class="contact-table"
+                        style="width: auto"
+                      >
+                        <tr class="contact-row">
+                          <td
+                            class="contact-text contact-item"
+                            style="
+                              padding: 0 14px 0 0;
+                              white-space: nowrap;
+                              font-size: 12px;
+                              color: #111;
+                              line-height: 1.5;
+                            "
+                          >
+                            <span style="color: #888">T:</span>
+                            <a
+                              href="tel:+902569110331"
+                              style="text-decoration: none; color: #111"
+                              >+902569110331</a
+                            >
+                          </td>
+                          <td
+                            class="contact-text contact-item"
+                            style="
+                              padding: 0 14px 0 0;
+                              white-space: nowrap;
+                              font-size: 12px;
+                              color: #111;
+                              line-height: 1.5;
+                            "
+                          >
+                            <span style="color: #888">E:</span>
+                            <a
+                              href="mailto:info@soreyapi.com"
+                              style="text-decoration: none; color: #111"
+                              >info@soreyapi.com</a
+                            >
+                          </td>
+                          <td
+                            class="contact-text contact-item"
+                            style="
+                              white-space: nowrap;
+                              font-size: 12px;
+                              color: #111;
+                              line-height: 1.5;
+                            "
+                          >
+                            <span style="color: #888">W:</span>
+                            <a
+                              href="https://www.soreyapi.com"
+                              target="_blank"
+                              style="text-decoration: none; color: #111"
+                              >soreyapi.com</a
+                            >
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td
+                colspan="2"
+                style="padding: 10px 0 10px 0"
+                class="separator-line-row"
+              >
+                <table
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="width: 100%; margin: 0 auto"
+                  role="presentation"
+                >
+                  <tr>
+                    <td
+                      class="separator-line"
+                      style="
+                        height: 1px;
+                        background: #e0e0e0;
+                        line-height: 1px;
+                        font-size: 0;
+                      "
+                    >
+                      &nbsp;
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <!-- Notice / Gizlilik Uyarısı -->
+            <tr>
+              <td colspan="2" style="padding: 12px 0 0 0">
+                <table
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  role="presentation"
+                  class="notice-box"
+                  style="
+                    width: 100%;
+                    background: #fffbf0;
+                    border-left: 3px solid #e0b800;
+                    border-radius: 4px;
+                  "
+                >
+                  <tr>
+                    <td
+                      class="notice-text"
+                      style="
+                        padding: 10px 14px;
+                        color: #444;
+                        font-size: 10px;
+                        line-height: 1.6;
+                        text-align: left;
+                        font-family: -apple-system, BlinkMacSystemFont,
+                          'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                      "
+                    >
+                      <strong
+                        class="notice-strong"
+                        style="
+                          color: #996600;
+                          display: block;
+                          margin-bottom: 3px;
+                          font-size: 10px;
+                        "
+                        >Notice / Gizlilik Uyarısı:</strong
+                      >
+                      Bu e-posta ve ekleri yalnızca gönderildiği kişi(ler)e
+                      özeldir ve gizli bilgi içerebilir. Yetkisiz kişilerin
+                      incelemesi, kopyalaması veya dağıtması yasaktır.
+                      Yanlışlıkla aldıysanız lütfen göndereni bilgilendirin ve
+                      mesajı sisteminizden silin. Gizlilik yükümlülüklerimiz
+                      hakkında daha fazla bilgi için
+                      <a
+                        href="https://soreyapi.com/yasal/gizlilik-politikasi/"
+                        target="_blank"
+                        style="color: #444; text-decoration: underline"
+                        >tıklayınız</a
+                      >.
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <!-- ==== /Modern Minimal Signature ==== -->
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

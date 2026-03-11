@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import OurServices from "@/components/OurServices.astro";
+import OurPartners from "@/components/OurPartners.astro";
+---
+
+<BaseLayout
+  title="Sektör Faaliyetleri - Sore Yapı "
+  description="Sore Yapı'nın faaliyetler ve hizmetler sayfasını inceleyin. İnşaat sektöründeki uzmanlık alanlarımız ve projelerimiz hakkında bilgi edinin."
+>
+  <!-- CONTENT START -->
+  <div class="page-content">
+    <!-- INNER PAGE BANNER -->
+    <div
+      class="wt-bnr-inr overlay-wraper bg-parallax bg-top-center"
+      data-stellar-background-ratio="0.5"
+      style="background-image:url(/images/banner/3.jpg);"
+    >
+      <div class="overlay-main bg-black opacity-07"></div>
+      <div class="container">
+        <div class="wt-bnr-inr-entry">
+          <div class="banner-title-outer">
+            <div class="banner-title-name">
+              <h2
+                class="text-white text-uppercase letter-spacing-5 font-18 font-weight-300 m-0"
+              >
+                Faaliyetlerimiz <br /> Sore Yapı
+              </h2>
+            </div>
+          </div>
+
+          <!-- BREADCRUMB ROW -->
+          <div class="p-tb20">
+            <div>
+              <ul class="wt-breadcrumb breadcrumb-style-2">
+                <li><a href="/">Anasayfa</a></li>
+                <li>Faaliyetlerimiz</li>
+              </ul>
+            </div>
+          </div>
+          <!-- BREADCRUMB ROW END -->
+        </div>
+      </div>
+    </div>
+    <!-- INNER PAGE BANNER END -->
+
+    <OurServices />
+    <OurPartners />
+  </div>
+  <!-- CONTENT END -->
+</BaseLayout>

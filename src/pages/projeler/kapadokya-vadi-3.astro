@@ -1,0 +1,949 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Proje verileri JSON olarak sabitlendi
+const projectData = {
+  proje_kimligi: {
+    ad: "Kapadokya Vadi 3. Etap",
+    gelistirici: "Arsago & Sore Yapı",
+    konum: {
+      il: "Nevşehir",
+      ilce: "Avanos",
+      mahalle: "Özkonak – Camikebir",
+      ada_parsel: "707 / 426",
+    },
+  },
+  teknik_ozellikler: {
+    toplam_alan: "35.319,99 ",
+    parsel_sayisi: 89,
+    parsel_araligi: "250 m² – 510 m²",
+    imar_durumu: "Turizm İmarlı",
+    tapu_turu: "Müstakil Tapulu",
+    altyapi: "Gelişime hazır, yapılaşma sınırları dahilinde",
+  },
+  stratejik_konum_dakika: [
+    { name: "Ceneviz Vadisi", time: "3 Dk", icon: "fa-map-marker" },
+    { name: "Özkonak Yeraltı Şehri", time: "6 Dk", icon: "fa-map-marker" },
+    { name: "Belha Manastırı", time: "7 Dk", icon: "fa-map-marker" },
+    { name: "Avanos Merkez", time: "15 Dk", icon: "fa-map-marker" },
+    { name: "Göreme, Uçhisar", time: "35 Dk", icon: "fa-map-marker" },
+    { name: "Ürgüp", time: "38 Dk", icon: "fa-map-marker" },
+    { name: "Havalimanı", time: "45 Dk", icon: "fa-plane" },
+    { name: "Nevşehir", time: "50 Dk", icon: "fa-map-marker" },
+  ],
+  satis_ve_yatirim_stratejisi: {
+    ana_konsept: "Senaryo Özgürlüğü",
+    yatirim_modelleri: [
+      {
+        model: "Pasif Yatırımcı",
+        aksiyon: "Al > Beklet > Sat",
+        fayda: "Toprak değer artışı ve enflasyon koruması",
+        icon: "fa-line-chart",
+        theme: "warning", // For the orange bar
+      },
+      {
+        model: "Geliştirici Vizyonu",
+        aksiyon: "Al > Projelendir > Yap > Sat",
+        fayda: "Maksimum kar marjı ve katma değerli satış",
+        icon: "fa-cubes",
+        theme: "primary", // Sore Yapi primary color
+      },
+      {
+        model: "Nakit Akışı",
+        aksiyon: "Al > Otel Yap > İşlet",
+        fayda: "Döviz bazlı sürekli turizm geliri",
+        icon: "fa-money",
+        theme: "success", // For the green bar
+      },
+    ],
+  },
+  neden_yatirim_yapilmali: [
+    "UNESCO Dünya Mirası listesinde, arzın sınırlı olduğu bir bölge.",
+    "12 ay kesintisiz turizm potansiyeli (Kapadokya markası).",
+    "Turizm imarlı arsaların nadir bulunması ve yüksek ROI.",
+    "Müstakil tapu ile tam bağımsız mülkiyet hakkı.",
+  ],
+};
+---
+
+<BaseLayout
+  title={`${projectData.proje_kimligi.ad} - Sore Yapı`}
+  description={`${projectData.proje_kimligi.konum.il} ${projectData.proje_kimligi.konum.ilce}'da bulunan Turizm İmarlı ve Müstakil Tapulu projemizi keşfedin.`}
+  keywords="Kapadokya Vadi 3. Etap, Nevşehir Avanos, Turizm İmarlı Arsa, Müstakil Tapu, Sore Yapı, Yatırım"
+>
+  <!-- CSS OVERRIDES FOR THIS PAGE TO MATCH THE PROVIDED IMAGE VIBE BUT SORE COLORS -->
+  <style>
+    .kv-bg-dark {
+      background-color: #ffffff; /* A deep navy/black from the image */
+      color: #ffffff;
+    }
+    .kv-card {
+      background-color: #1a2230;
+      border: 1px solid #2a3547;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .kv-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .kv-icon-box {
+      background-color: #ffffff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin: 0 auto;
+      color: #e1a74d; /* Sore Primary */
+    }
+    .kv-btn-primary {
+      background-color: #e1a74d;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      border-radius: 4px;
+      padding: 12px 30px;
+    }
+    .kv-form-input {
+      background-color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 15px;
+      width: 100%;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    .hero-section {
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      padding: 100px 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(11, 18, 28, 0.95) 0%,
+        rgba(11, 18, 28, 0.7) 100%
+      );
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .strategy-card {
+      border-top-width: 5px;
+      border-top-style: solid;
+    }
+  </style>
+
+  <div
+    class="page-content kv-bg-dark"
+    style="font-family: 'Poppins', sans-serif;"
+  >
+    <!-- 1. HERO SECTION -->
+    <div
+      class="hero-section"
+      style="background-image: url('/images/projects/bg-kapadokya.jpg');"
+    >
+      <div class="hero-overlay"></div>
+      <div class="container relative z-index-1">
+        <div class="row align-items-center">
+          <div class="col-lg-7 col-md-12 m-b30">
+            <h1
+              class="text-white font-weight-800"
+              style="font-size: 3rem; line-height: 1.2;"
+            >
+              Kapadokya<br /><span style="color:#e1a74d;">Vadi 3. Etap</span>
+            </h1>
+            <p
+              class="font-20 font-weight-300 m-t20 m-b20 text-white opacity-08"
+            >
+              Yatırım Değeri Yüksek, Senaryo Özgürlüğü Sunan Proje!
+            </p>
+            <p class="font-16 text-white opacity-07">
+              {projectData.proje_kimligi.gelistirici} güvencesiyle yatırımlarınızı
+              Kapadokya'nın kalbinde değerlendirin.
+            </p>
+            <div class="m-t30">
+              <a
+                href="#iletisim-formu"
+                class="kv-btn-primary d-inline-block text-uppercase m-r15"
+                >Bize Ulaşın</a
+              >
+              <a
+                href="tel:+905551234567"
+                class="btn btn-outline-light text-uppercase font-weight-bold"
+                style="padding: 12px 30px;">Hemen Arayın</a
+              >
+            </div>
+          </div>
+
+          <div class="col-lg-5 col-md-12">
+            <div class="kv-card p-a30">
+              <h3 class="font-20 text-white m-t0 m-b20 text-center">
+                Bilgi Alın
+              </h3>
+              <form
+                action="/api/form-handler.php"
+                id="kapadokya-form"
+                method="POST"
+                novalidate
+              >
+                <!-- Honeypot -->
+                <input
+                  type="text"
+                  name="website_url"
+                  autocomplete="off"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  style="position:absolute;left:-9999px;opacity:0;"
+                />
+                <!-- Gizli Alanlar -->
+                <input type="hidden" name="form_start" value="" />
+                <input type="hidden" name="source_page" value="" />
+                <input type="hidden" name="fb_event_id" value="" />
+                <input type="hidden" name="fbp" value="" />
+                <input type="hidden" name="fbc" value="" />
+                <input
+                  type="hidden"
+                  name="project"
+                  value="Kapadokya Vadi 3 Etap"
+                />
+
+                <div class="row form-group mt-lg">
+                  <label
+                    class="col-sm-3 control-label text-white text-left font-14"
+                    >Ad Soyad</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      name="name"
+                      class="form-control"
+                      placeholder="Adınızı ve soyadınızı yazın..."
+                      required
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <div class="row form-group mt-lg">
+                  <label
+                    class="col-sm-3 control-label text-white text-left font-14"
+                    >Telefon</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      name="phone"
+                      class="form-control"
+                      placeholder="Telefon numaranızı yazın..."
+                      type="tel"
+                    />
+                  </div>
+                </div>
+
+                <div class="row form-group mt-lg" style="display:none;">
+                  <label
+                    class="col-sm-3 control-label text-white text-left font-14"
+                    >Proje</label
+                  >
+                  <div class="col-sm-9">
+                    <select name="project_select" class="form-control">
+                      <option value="Kapadokya Vadi 3 Etap" selected
+                        >Kapadokya Vadi 3 Etap</option
+                      >
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row form-group mt-lg">
+                  <label
+                    class="col-sm-3 control-label text-white text-left font-14"
+                    >Mesaj</label
+                  >
+                  <div class="col-sm-9">
+                    <textarea
+                      rows="4"
+                      name="message"
+                      class="form-control"
+                      placeholder="Mesajınızı yazın..."
+                      required></textarea>
+                  </div>
+                </div>
+
+                <div class="row form-group mt-lg kvkk-group">
+                  <div class="col-sm-3"></div>
+                  <div
+                    class="col-sm-12 consent-wrapper text-left text-white"
+                    style="font-size: 13px;"
+                  >
+                    <div class="form-check m-b5">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="kv-consent-kvkk"
+                        name="consent_kvkk"
+                        checked
+                        required
+                      />
+                      <label
+                        class="form-check-label opacity-08"
+                        for="kv-consent-kvkk"
+                        style="margin-top: 2px;"
+                      >
+                        <small
+                          ><strong
+                            ><a
+                              href="/yasal/kvkk-aydinlatma"
+                              target="_blank"
+                              class="text-white text-underline"
+                              >KVKK Aydınlatma Metni</a
+                            ></strong
+                          >'ni okudum, kabul ediyorum.</small
+                        >
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="kv-consent-marketing"
+                        name="consent_marketing"
+                        checked
+                      />
+                      <label
+                        class="form-check-label opacity-08"
+                        for="kv-consent-marketing"
+                        style="margin-top: 2px;"
+                      >
+                        <small
+                          >Kampanya ve bilgilendirme ileti almayı kabul
+                          ediyorum.</small
+                        >
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row form-group mt-lg">
+                  <div class="col-sm-12 text-center">
+                    <button
+                      type="submit"
+                      class="site-button text-uppercase button-sm letter-spacing-2 w-100"
+                    >
+                      Gönder
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. VIDEO / STORY SECTION -->
+    <div class="section-full p-t80 p-b50">
+      <div class="container text-center">
+        <div
+          class="position-relative d-inline-block"
+          style="border-radius: 12px; overflow: hidden; border: 4px solid #1a2230;"
+        >
+          <img
+            src="https://img.youtube.com/vi/jCof2IFqqmo/maxresdefault.jpg"
+            alt="Video Placeholder"
+            class="img-fluid"
+            loading="lazy"
+            decoding="async"
+          />
+          <div
+            class="position-absolute w-100 h-100 top-0 left-0 d-flex align-items-center justify-content-center"
+            style="background: rgba(0,0,0,0.3);"
+          >
+            <a
+              href="https://www.youtube.com/watch?v=jCof2IFqqmo"
+              style="background: #e1a74d; width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;"
+              class="mfp-video play-btn text-decoration-none"
+            >
+              <i class="fa fa-play text-black font-30" style="margin-left:5px;"
+              ></i>
+            </a>
+          </div>
+          <div
+            class="position-absolute bottom-0 left-0 p-a30 text-left w-100"
+            style="background: linear-gradient(0deg, #000 0%, transparent 100%);"
+          >
+            <h2 class="text-white font-weight-800 m-b0 text-uppercase">
+              Bir Yatırım<br /><span class="text-primary">Hikayesi.</span>
+            </h2>
+          </div>
+        </div>
+        <p
+          class="m-t30 font-16 opacity-08 mx-auto text-black"
+          style="max-width: 800px;"
+        >
+          Kapadokya Vadi 3, sadece bir arsa değil, aynı zamanda size sunulan
+          sınırsız senaryo özgürlüğüdür. İsterseniz yatırım yapın bekleyin,
+          isterseniz projenizi geliştirin.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. STATS ROW -->
+    <div class="section-full p-b50">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+            <div class="kv-card p-a30 text-center h-100">
+              <div class="kv-icon-box m-b15"><i class="fa fa-map"></i></div>
+              <h3 class="font-weight-700 m-b5 text-white">
+                {projectData.teknik_ozellikler.parsel_sayisi}
+              </h3>
+              <p class="font-14 text-uppercase m-b0 opacity-07">Parsel</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+            <div class="kv-card p-a30 text-center h-100">
+              <div class="kv-icon-box m-b15">
+                <i class="fa fa-arrows-alt"></i>
+              </div>
+              <h3 class="font-weight-700 m-b5 text-white">
+                {projectData.teknik_ozellikler.toplam_alan} m²
+              </h3>
+              <p class="font-14 text-uppercase m-b0 opacity-07">Toplam Alan</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+            <div class="kv-card p-a30 text-center h-100">
+              <div class="kv-icon-box m-b15"><i class="fa fa-expand"></i></div>
+              <h3 class="font-weight-700 m-b5 text-white">
+                {projectData.teknik_ozellikler.parsel_araligi}
+              </h3>
+              <p class="font-14 text-uppercase m-b0 opacity-07">Büyüklük</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+            <div class="kv-card p-a30 text-center h-100">
+              <div class="kv-icon-box m-b15">
+                <i class="fa fa-building-o"></i>
+              </div>
+              <h3 class="font-weight-700 m-b5 text-white">
+                {projectData.teknik_ozellikler.imar_durumu}
+              </h3>
+              <p class="font-14 text-uppercase m-b0 opacity-07">İmar</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. PROJE KÜNYESİ -->
+    <div class="section-full p-b50">
+      <div class="container">
+        <h2 class="section-title">Proje Künyesi</h2>
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-2 col-md-4 col-sm-4 col-6 m-b20">
+            <div class="kv-card p-tb20 p-lr10 text-center h-100">
+              <i class="fa fa-map-marker font-24 m-b10"></i>
+              <p class="font-12 opacity-06 m-b0 text-uppercase">İl</p>
+              <h5 class="text-white font-16 m-t5 m-b0">
+                {projectData.proje_kimligi.konum.il}
+              </h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4 col-6 m-b20">
+            <div class="kv-card p-tb20 p-lr10 text-center h-100">
+              <i class="fa fa-map-pin font-24 m-b10"></i>
+              <p class="font-12 opacity-06 m-b0 text-uppercase">İlçe</p>
+              <h5 class="text-white font-16 m-t5 m-b0">
+                {projectData.proje_kimligi.konum.ilce}
+              </h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4 col-6 m-b20">
+            <div class="kv-card p-tb20 p-lr10 text-center h-100">
+              <i class="fa fa-street-view font-24 m-b10"></i>
+              <p class="font-12 opacity-06 m-b0 text-uppercase">Mahalle</p>
+              <h5 class="text-white font-16 m-t5 m-b0">Özkonak</h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4 col-6 m-b20">
+            <div class="kv-card p-tb20 p-lr10 text-center h-100">
+              <i class="fa fa-th-large font-24 m-b10"></i>
+              <p class="font-12 opacity-06 m-b0 text-uppercase">Ada / Parsel</p>
+              <h5 class="text-white font-16 m-t5 m-b0">
+                {projectData.proje_kimligi.konum.ada_parsel}
+              </h5>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-4 col-6 m-b20">
+            <div class="kv-card p-tb20 p-lr10 text-center h-100">
+              <i class="fa fa-file-text-o font-24 m-b10"></i>
+              <p class="font-12 opacity-06 m-b0 text-uppercase">Tapu Türü</p>
+              <h5 class="text-white font-14 m-t5 m-b0">
+                {projectData.teknik_ozellikler.tapu_turu}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. VAZİYET PLANI -->
+    <div class="section-full p-b50">
+      <div class="container text-center">
+        <h2 class="section-title">Vaziyet Planı</h2>
+        <div
+          class="kv-card p-a15 d-inline-block w-100"
+          style="max-width: 900px;"
+        >
+          <img
+            src="/images/projects/vaziyet.jpg"
+            alt="Vaziyet Planı"
+            class="img-fluid"
+            style="border-radius: 8px;"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. AVANTAJLAR -->
+    <div class="section-full p-b50">
+      <div class="container">
+        <h2 class="section-title">
+          Turizm İmarlı & Müstakil Tapulu Avantajlar
+        </h2>
+        <div class="row">
+          {
+            projectData.neden_yatirim_yapilmali.map((item) => (
+              <div class="col-lg-6 col-md-6 m-b20">
+                <div class="kv-card p-a30 h-100 d-flex align-items-center">
+                  <div
+                    class="kv-icon-box m-r20"
+                    style="width:40px; height:40px; font-size:18px; flex-shrink:0;"
+                  >
+                    <i class="fa fa-check" />
+                  </div>
+                  <p class="m-b0 font-16 text-white">{item}</p>
+                </div>
+              </div>
+            ))
+          }
+          <!-- JSON'da sadece 4 madde var. Tasarım bütünlüğü için 2 adet jenerik avantaj ekliyoruz (Sore Yapı veya yatırım genel faydaları) -->
+          <div class="col-lg-6 col-md-6 m-b20">
+            <div class="kv-card p-a30 h-100 d-flex align-items-center">
+              <div
+                class="kv-icon-box m-r20"
+                style="width:40px; height:40px; font-size:18px; flex-shrink:0;"
+              >
+                <i class="fa fa-check"></i>
+              </div>
+              <p class="m-b0 font-16 text-white">
+                {projectData.teknik_ozellikler.altyapi}
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 m-b20">
+            <div class="kv-card p-a30 h-100 d-flex align-items-center">
+              <div
+                class="kv-icon-box m-r20"
+                style="width:40px; height:40px; font-size:18px; flex-shrink:0;"
+              >
+                <i class="fa fa-check"></i>
+              </div>
+              <p class="m-b0 font-16 text-white">
+                Yenilikçi vizyon ile değerlenmeye hızlı ve açık konum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. YATIRIM STRATEJİSİ -->
+    <div class="section-full p-b50">
+      <div class="container">
+        <div class="text-center m-b30">
+          <p class="text-primary text-uppercase letter-spacing-2 m-b5 font-14">
+            <i class="fa fa-star"></i>
+            {projectData.satis_ve_yatirim_stratejisi.ana_konsept}
+          </p>
+          <h2 class="section-title m-b0">Yatırım Stratejisi</h2>
+        </div>
+        <div class="row d-flex justify-content-center">
+          {
+            projectData.satis_ve_yatirim_stratejisi.yatirim_modelleri.map(
+              (model) => {
+                let borderColor = "";
+                if (model.theme === "warning") borderColor = "#f39c12";
+                else if (model.theme === "primary") borderColor = "#e1a74d";
+                else if (model.theme === "success") borderColor = "#2ecc71";
+
+                return (
+                  <div class="col-lg-4 col-md-6 m-b30">
+                    <div
+                      class="kv-card p-a30 text-center h-100 strategy-card flex-column d-flex"
+                      style={`border-top-color: ${borderColor};`}
+                    >
+                      <div
+                        class="kv-icon-box m-b20"
+                        style={`background-color: ${borderColor}20; color: ${borderColor};`}
+                      >
+                        <i class={`fa ${model.icon}`} />
+                      </div>
+                      <h4 class="text-white font-weight-700 m-b10">
+                        {model.model}
+                      </h4>
+                      <p class="text-uppercase font-12 opacity-06 m-b15">
+                        {model.aksiyon}
+                      </p>
+                      <div class="wt-separator-outer m-b15">
+                        <div
+                          class="wt-separator"
+                          style="background-color: #2a3547;"
+                        />
+                      </div>
+                      <p class="m-b0 font-15 flex-grow-1 opacity-08">
+                        {model.fayda}
+                      </p>
+                      <button
+                        class="btn m-t20 text-white font-weight-bold"
+                        style={`background-color: ${borderColor}; border:none; border-radius:4px; padding:10px 20px;`}
+                      >
+                        Daha Fazla Bilgi
+                      </button>
+                    </div>
+                  </div>
+                );
+              },
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. LOKASYON HARİTASI & AVANTAJLAR -->
+    <div class="section-full p-b50">
+      <div class="container text-center">
+        <h2 class="section-title">Lokasyon Haritası & Avantajlar</h2>
+
+        <div class="m-b40">
+          <img
+            src="/images/projects/lokasyon.png"
+            alt="Lokasyon Haritası"
+            class="img-fluid"
+            style="border-radius: 12px; max-width: 100%;"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <div class="row d-flex justify-content-center">
+          {
+            projectData.stratejik_konum_dakika.map((loc) => (
+              <div class="col-lg-3 col-md-4 col-sm-6 col-6 m-b20">
+                <div class="kv-card p-tb15 p-lr10 h-100">
+                  <i class={`fa ${loc.icon}  font-20 m-b10`} />
+                  <h5 class="text-white font-14 m-b5">{loc.name}</h5>
+                  <span class="font-weight-700">{loc.time}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. NEDEN YATIRIM? -->
+    <div class="section-full p-b80">
+      <div class="container">
+        <div class="kv-card p-a40">
+          <div class="row align-items-center">
+            <div class="col-lg-5 col-md-12 m-b20">
+              <h2
+                class="text-white m-t0 text-uppercase font-30"
+                style="line-height:1.3;"
+              >
+                Neden Kapadokya'da<br />Yatırım Yapmalısınız?
+              </h2>
+              <p class="opacity-08 m-b20">
+                Bu sorunun cevabını detaylandırmak ve sizlere doğru bilgiyi
+                sağlamak için listeledik. Bizimle iletişime geçmekten
+                çekinmeyin.
+              </p>
+              <a
+                href="tel:+905551234567"
+                class="kv-btn-primary d-inline-block text-uppercase"
+                >Bizi Arayın</a
+              >
+            </div>
+            <div class="col-lg-7 col-md-12">
+              <div class="row">
+                <div class="col-md-6 m-b20">
+                  <div
+                    class="p-a20"
+                    style="background:#212c3f; border-radius:8px; height:100%;"
+                  >
+                    <i class="fa fa-globe font-24 m-b10"></i>
+                    <p class="text-white m-b0 font-14">
+                      Gelişen Turizm Ağı ve Sürekli Değer Artışı
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 m-b20">
+                  <div
+                    class="p-a20"
+                    style="background:#212c3f; border-radius:8px; height:100%;"
+                  >
+                    <i class="fa fa-line-chart font-24 m-b10"></i>
+                    <p class="text-white m-b0 font-14">
+                      Düşük Başlangıç Maliyeti ve Yüksek ROI
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 m-b20">
+                  <div
+                    class="p-a20"
+                    style="background:#212c3f; border-radius:8px; height:100%;"
+                  >
+                    <i class="fa fa-shield font-24 m-b10"></i>
+                    <p class="text-white m-b0 font-14">
+                      Gelecek Nesillere Miras Bırakabileceğiniz Müstakil Tapu
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 m-b20">
+                  <div
+                    class="p-a20"
+                    style="background:#212c3f; border-radius:8px; height:100%;"
+                  >
+                    <i class="fa fa-legal font-24 m-b10"></i>
+                    <p class="text-white m-b0 font-14">
+                      Tüm İmarlı Çalışmaları Tamamlanmış Yasal Altyapı
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CONTENT END -->
+
+  <script is:inline>
+    // SweetAlert2 + intl-tel-input ile telefon no formatlama ve form koruması
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("kapadokya-form");
+      if (!form) return;
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const startField = form.querySelector('input[name="form_start"]');
+      if (startField) startField.value = Date.now().toString();
+
+      const ensureSwalLoaded = () =>
+        new Promise((res) => {
+          if (window.Swal) return res();
+          const l = document.createElement("link");
+          l.rel = "stylesheet";
+          l.href =
+            "https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css";
+          document.head.appendChild(l);
+          const s = document.createElement("script");
+          s.src =
+            "https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js";
+          s.onload = res;
+          document.head.appendChild(s);
+        });
+
+      const ensureIntlLoaded = () =>
+        new Promise((res) => {
+          if (window.intlTelInput) return res();
+          const l = document.createElement("link");
+          l.rel = "stylesheet";
+          l.href =
+            "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/css/intlTelInput.min.css";
+          document.head.appendChild(l);
+          const s = document.createElement("script");
+          s.src =
+            "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/js/intlTelInput.min.js";
+          s.onload = () => {
+            const u = document.createElement("script");
+            u.src =
+              "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/js/utils.js";
+            u.onload = res;
+            document.head.appendChild(u);
+          };
+          document.head.appendChild(s);
+        });
+
+      let iti = null;
+      const phoneInput = form.querySelector('input[name="phone"]');
+
+      (async () => {
+        if (!phoneInput) return;
+        try {
+          await ensureIntlLoaded();
+          iti = window.intlTelInput(phoneInput, {
+            initialCountry: "tr",
+            utilsScript:
+              "https://cdn.jsdelivr.net/npm/intl-tel-input@17/build/js/utils.js",
+            nationalMode: false,
+            autoHideDialCode: false,
+            autoPlaceholder: "aggressive",
+            separateDialCode: true,
+            preferredCountries: ["tr"],
+            formatOnDisplay: true,
+          });
+          requestAnimationFrame(() => {
+            if (phoneInput.parentElement?.classList.contains("iti")) {
+              phoneInput.parentElement.style.width = "100%";
+            }
+          });
+        } catch (err) {
+          iti = null;
+        }
+      })();
+
+      let isSubmitting = false;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (isSubmitting) return;
+
+        const honeypot = form.querySelector('input[name="website_url"]');
+        if (honeypot && honeypot.value.trim() !== "") return; // spam koruması
+
+        if (
+          phoneInput &&
+          iti &&
+          phoneInput.value.trim() !== "" &&
+          !iti.isValidNumber()
+        ) {
+          await ensureSwalLoaded();
+          Swal.fire({
+            icon: "error",
+            title: "Geçersiz telefon",
+            text: "Lütfen geçerli bir telefon numarası girin.",
+          });
+          return;
+        }
+
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "Gönderiliyor...";
+        submitBtn.disabled = true;
+        isSubmitting = true;
+
+        const fd = new FormData(form);
+        fd.set("source_page", window.location.href);
+        if (!fd.get("fb_event_id")) {
+          fd.set(
+            "fb_event_id",
+            "eid-" + Math.random().toString(36).slice(2) + Date.now(),
+          );
+        }
+
+        if (phoneInput && iti && phoneInput.value.trim() !== "") {
+          try {
+            fd.set("phone", iti.getNumber());
+          } catch (e) {
+            fd.set("phone", phoneInput.value.trim());
+          }
+        }
+
+        try {
+          await ensureSwalLoaded();
+          const res = await fetch(form.action, {
+            method: form.method,
+            body: fd,
+            headers: { Accept: "application/json" },
+          });
+          const isJson = res.headers
+            .get("content-type")
+            ?.includes("application/json");
+          const data = isJson ? await res.json() : {};
+
+          if (res.ok && (data.success || data.message || isJson)) {
+            Swal.fire({
+              icon: "success",
+              title: "Başvurunuz alındı",
+              text:
+                data.message || "En kısa sürede sizinle iletişime geçeceğiz.",
+              confirmButtonText: "Tamam",
+            });
+            form.reset();
+
+            if (window.fbq) {
+              window.fbq("track", "Lead", {
+                content_name: "Kapadokya Vadi 3 Etap",
+                value: 0,
+                currency: "TRY",
+              });
+            }
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Hata",
+              text:
+                data.message || "Form gönderilemedi. Lütfen tekrar deneyin.",
+            });
+          }
+        } catch (err) {
+          await ensureSwalLoaded();
+          Swal.fire({
+            icon: "error",
+            title: "Hata",
+            text: "Bir hata oluştu. Lütfen tekrar deneyin.",
+          });
+        } finally {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          isSubmitting = false;
+        }
+      });
+    });
+  </script>
+
+  <style is:inline>
+    /* iOS Safari auto-zoom prevention */
+    @media (max-width: 767px) {
+      #kapadokya-form input,
+      #kapadokya-form select,
+      #kapadokya-form textarea,
+      #kapadokya-form .form-control {
+        font-size: 16px !important;
+      }
+      #kapadokya-form .iti input {
+        font-size: 16px !important;
+      }
+    }
+
+    #kapadokya-form .iti {
+      width: 100% !important;
+      display: block;
+    }
+    #kapadokya-form .iti .iti__flag-container {
+      left: 0;
+    }
+    #kapadokya-form .iti input.iti__tel-input {
+      padding-left: 6px !important;
+      width: 100% !important;
+      box-sizing: border-box;
+      line-height: 1.5;
+      height: auto;
+    }
+  </style>
+</BaseLayout>
